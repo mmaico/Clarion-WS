@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LAAD - Security</title>
+ 
+</head>
+<body>
+
+
+<div class="invoce_view result">
+	<H4> $company.name</h4>
+		      <table>
+					<colgroup>
+						<col />
+						<col width="18%" />
+						<col width="18%" />
+						<col width="10%" />
+					</colgroup>
+					
+					<thead>
+						<tr>
+							<th>Produto</th>
+							<th>Quantidade</th>
+							<th>Unitario</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						#foreach($item in $cartItens)
+						
+    						<tr>
+    							<td>
+    								$item.productName
+    							</td>
+    							<td>$item.qtd</td>
+								<td align="right">$item.productPrice</td>
+    							<td align="right">$item.subTotal</td>
+    						</tr>
+						#end   
+						
+					</tbody>
+				</table>
+<div>
+</body>	
