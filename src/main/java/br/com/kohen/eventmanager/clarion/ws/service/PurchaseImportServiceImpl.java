@@ -42,7 +42,7 @@ public class PurchaseImportServiceImpl {
 			return "Processo de Importacao nao esta habilitado";
 		}	
 		
-		CommonBaseDAO baseDAO = (CommonBaseDAO)ServiceLocator.getBeanByBeanName("commonBaseDAO");
+		CommonBaseDAO baseDAO = (CommonBaseDAO)ServiceLocator.getBean("commonBaseDAO");
 		
 		
 		APEDIDO pedido = new APEDIDO();

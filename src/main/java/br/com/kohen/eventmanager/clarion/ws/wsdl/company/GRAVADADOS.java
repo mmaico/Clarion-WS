@@ -625,7 +625,7 @@ public class GRAVADADOS {
     	companyvo.setNOME(company.getName() == null ? "" : company.getName().toUpperCase());
     	companyvo.setNOMEFANT(company.getTradingName());
     	
-    	CommonBaseDAO baseDAO = (CommonBaseDAO)ServiceLocator.getBeanByBeanName("commonBaseDAO");
+    	CommonBaseDAO baseDAO = (CommonBaseDAO)ServiceLocator.getBean("commonBaseDAO");
     	
     	LOG.debug("################### ----------> Dados basicos completo o parse...");
     	List<Address> addresss = company.getAddresss();
