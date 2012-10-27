@@ -19,13 +19,12 @@ import javax.xml.ws.WebServiceFeature;
  * 
  */
 @WebServiceClient(name = "WSCLSA1", targetNamespace = "http://189.2.170.19:81/", wsdlLocation = "http://189.2.170.19:81/ws/wsclsa1.apw?wsdl")
-//@Component("companyWSService")
 public class WSCLSA1
     extends Service
 {
 
     private final static URL WSCLSA1_WSDL_LOCATION;
-    private final static Logger logger = Logger.getLogger(br.com.kohen.eventmanager.clarion.ws.wsdl.company.WSCLSA1 .class.getName());
+    private final static Logger logger = Logger.getLogger(WSCLSA1 .class.getName());
 
     static {
         URL url = null;
