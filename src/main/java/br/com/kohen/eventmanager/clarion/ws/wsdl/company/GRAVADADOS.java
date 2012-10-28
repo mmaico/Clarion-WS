@@ -690,6 +690,110 @@ public class GRAVADADOS {
     }
     
     
+    public static String validate(Company company) {
+    	StringBuilder error = new StringBuilder();
+    	
+    	GRAVADADOS companyvo = new GRAVADADOS();
+    	companyvo.setCODIGO(company.getId().toString());
+    	companyvo.setCHAVE("ABC1000");
+    	companyvo.setIE(company.getIe());
+    	companyvo.setIM("");
+    	
+    	if (com.mysql.jdbc.StringUtils.isNullOrEmpty(company.getName())) {
+    		error.append(" Nome da empresa esta vazio --");
+    	} else {
+    		companyvo.setNOME(company.getName());
+    	}
+    	
+
+    	
+    	if (com.mysql.jdbc.StringUtils.isNullOrEmpty(company.getTradingName())) {
+    		error.append(" Nome Fantasia esta vazio --");
+    	} else {
+    		companyvo.setNOMEFANT(company.getTradingName());
+    	}
+    	
+    	List<Address> addresss = company.getAddresss();
+    	boolean hasBusinessAdress = false;
+    	
+    	for (Address address : addresss) {
+			
+    		if (address.getAddressType() == AddressType.BUSINESS) {
+    			hasBusinessAdress = true;
+    			companyvo.setBAIRRO(address.getNeighborhood());
+    			companyvo.setCEP(address.getZipCode());
+    			companyvo.setCOMPLTO(address.getComplement());
+    			
+    			companyvo.setNUMERO(address.getNumber());
+    			companyvo.setENDERECO(address.getStreet());
+    			
+    			if (address.getCountry() != null && address.getCountry().getId().equals(31l)) {
+    				if (com.mysql.jdbc.StringUtils.isNullOrEmpty(company.getCnpj())) {
+    					error.append(" Empresa brasileira sem cnpj ---");
+    				} else {
+    					companyvo.setCNPJ(StringUtils.removeEspecialChars(company.getCnpj()));
+    					
+    				}
+    				
+    				if (address.getState() == null || com.mysql.jdbc.StringUtils.isNullOrEmpty(address.getState().getName())) {
+    					error.append(" Empresa brasileira sem estado ---");
+    				} else {
+    					companyvo.setUF(address.getState().getName());
+    				}
+    				
+    				if (address.getCityy() == null || com.mysql.jdbc.StringUtils.isNullOrEmpty(address.getCityy().getName())) {
+    					error.append(" Empresa brasileira sem cidade ---");
+    				} else {
+    					companyvo.setCIDADE(address.getCityy().getCode());
+    				}
+    				
+    				
+    			} else {
+    				if (address.getCountry() == null) {
+    					error.append(" Endereco de cobranca sem pais ---");
+    				} else {
+    					companyvo.setCNPJ("140");
+        				companyvo.setUF("EX");
+        				companyvo.setCIDADE("");
+    				}
+    				
+    			}
+    			if (address.getCountry() == null) {
+    				error.append(" Empresa Sem Pais no endereco de cobraca ---");
+    			} else {
+    				if (address.getCountry().getCodeBacen() == null) {
+    					error.append(" Empresa com Pais sem codigo bacen ---");
+    				} else {
+    					companyvo.setPAIS(address.getCountry().getCodeBacen());
+    				}
+    				
+    			}
+    			
+    		}
+    		
+		}
+    	
+    	if (!hasBusinessAdress) {
+    		error.append(" Nao tem informacao de endereco de cobranca---");
+    	}
+    	
+    	List<Contact> contacts = company.getContacts();
+    	for (Contact contact : contacts) {
+			
+    		if(contact.getContactType() == ContactType.PRIMARY) {
+    			companyvo.setCARGO(contact.getPosition());
+    			companyvo.setTEL(contact.getPhone());
+    			companyvo.setTELCEL(contact.getCellPhone());
+    			companyvo.setEMAIL(contact.getEmail());
+    		}
+		}
+    	
+    	return error.toString();
+    	
+    }
+    
+    
+    
     
     
 }

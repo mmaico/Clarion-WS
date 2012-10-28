@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.kohen.eventmanager.clarion.email.Messages;
 import br.com.kohen.eventmanager.clarion.ws.service.CompanyImportServiceImpl;
+import br.com.kohen.eventmanager.commons.dao.CommonBaseDAO;
 import br.com.kohen.eventmanager.commons.entity.Company;
 import br.com.kohen.eventmanager.commons.entity.CompanyRelationship;
 
@@ -34,6 +35,9 @@ public class ImportCompanyAspectTest {
 	
 	@Mock
 	private ProceedingJoinPoint join;
+	
+	@Mock
+	private CommonBaseDAO<Company> baseDAO;
 	
 	@Mock
 	private Log log;
@@ -100,6 +104,25 @@ public class ImportCompanyAspectTest {
 		
 		verify(companyImportService, never()).importCompany(Mockito.any(Company.class));
 	}
+	
+	@Test
+	public void shouldNotImportCompanyIfHasCode() throws Throwable {
+		CompanyRelationship relationship = getRelationStub();
+		relationship.getPartner().setCode("8838837");
+		
+		Map<String, String> errors = new HashMap<String, String>();
+		
+		Object[] args = new Object[]{relationship};
+		
+		when(join.getArgs()).thenReturn(args);
+		when(join.proceed()).thenReturn(errors);
+		
+		when(baseDAO.findById(Company.class, 1l)).thenReturn(relationship.getPartner());
+		importCompany.importCompanyToClarionSystem(join);
+		
+		verify(companyImportService, never()).importCompany(Mockito.any(Company.class));
+	}
+	
 	
 	
 	private CompanyRelationship getRelationStub() {

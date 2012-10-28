@@ -44,8 +44,28 @@ public class ImportError {
 		this.causeEx = causeEx;
 	}
 	
+	public static ImportError internalError(String message) {
+		ImportError importError = new ImportError();
+		importError.setCause(message);
+		
+		return importError;
+		
+	}
+	
+	public static ImportError exError(String message) {
+		ImportError importError = new ImportError();
+		importError.setCauseEx(message);
+		
+		return importError;
+		
+	}
 	
 	
+	public ImportError companyId(Long id) {
+		this.setId(id);
+		
+		return this;
+	}
 	
 	
 	

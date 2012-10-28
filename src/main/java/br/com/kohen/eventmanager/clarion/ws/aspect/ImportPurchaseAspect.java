@@ -33,7 +33,7 @@ public class ImportPurchaseAspect {
 	@Autowired
 	private PurchaseImportServiceImpl purchaseImportService;
 	
-	@Around("methodImporPurchase()")
+	//@Around("methodImporPurchase()")
 	public Object importCompanyToClarionSystem(ProceedingJoinPoint join) throws Throwable {
 		String messageReturned = "";
 		try {	
@@ -81,9 +81,9 @@ public class ImportPurchaseAspect {
 	}
 	
 	
-	@Pointcut("execution(* br.com.kohen.eventmanager.onsite.service.impl.OnSitePurchaseServiceImpl.purchaseFinalize(..))")
-	public void methodImporPurchase(){}
-	
+//	@Pointcut("execution(* br.com.kohen.eventmanager.onsite.service.impl.OnSitePurchaseServiceImpl.purchaseFinalize(..))")
+//	public void methodImporPurchase(){}
+//	
 	
 	
 	

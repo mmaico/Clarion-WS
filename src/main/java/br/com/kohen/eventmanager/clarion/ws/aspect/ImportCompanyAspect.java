@@ -13,10 +13,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import br.com.kohen.eventmanager.clarion.email.Messages;
 import br.com.kohen.eventmanager.clarion.ws.service.CompanyImportServiceImpl;
+import br.com.kohen.eventmanager.commons.dao.CommonBaseDAO;
 import br.com.kohen.eventmanager.commons.entity.Company;
 import br.com.kohen.eventmanager.commons.entity.CompanyRelationship;
 
@@ -33,6 +35,10 @@ public class ImportCompanyAspect {
 	
 	@Autowired
 	private CompanyImportServiceImpl companyImportService;
+	
+	@Autowired
+	@Qualifier("commonBaseDAO")
+	private CommonBaseDAO<Company> baseDAO;
 	
 	
 	
@@ -56,6 +62,10 @@ public class ImportCompanyAspect {
 			
 			CompanyRelationship relation = (CompanyRelationship) args[COMPANY_RELATION];
 			
+			if (hasCodeExternalSystem(relation.getPartner())) {
+				return proceed;
+			}
+			
 			errors = companyImportService.importCompany(relation.getPartner());
 			
 			if (!errors.isEmpty()) {
@@ -67,6 +77,24 @@ public class ImportCompanyAspect {
 		}
 		
 		return proceed;
+	}
+
+
+	private Boolean hasCodeExternalSystem(Company partner) {
+		
+		if (partner.getId() == null)
+			return false;
+		
+		Company partnerLoaded = baseDAO.findById(Company.class, partner.getId());
+		
+		if (partnerLoaded == null)
+			return false;
+		
+		if (partner.getCode() == null || partner.getCode().isEmpty()) {
+			return false;
+		}
+		
+		return true;
 	}
 
 
