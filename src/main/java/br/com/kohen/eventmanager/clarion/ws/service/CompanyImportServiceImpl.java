@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.kohen.eventmanager.clarion.dao.ClarionCompanyDAO;
-import br.com.kohen.eventmanager.clarion.dao.ClarionCompanyDAOImpl;
 import br.com.kohen.eventmanager.clarion.ws.dao.CompanyImportDAO;
 import br.com.kohen.eventmanager.clarion.ws.entity.ImportError;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.company.GRAVADADOS;
@@ -58,7 +57,11 @@ public class CompanyImportServiceImpl {
 			
 			List<Company> list = companyDAO.getAllCompanyNotImported();
 			for (Company company : list) {
-				importCompany(company);
+				try {
+				 importCompany(company);
+				}catch(Exception e) {
+					log.error("########################## Erro no processo de envio da empresa: " + company.getId() +" --" + e.getMessage());
+				}
 			}
 		} finally {
 			running = false;
@@ -124,13 +127,16 @@ public class CompanyImportServiceImpl {
 
 	
 	private void saveErrorInDatabase(ImportError importError) {
-		ImportError importErrorLoaded = (ImportError) baseDAO.findById(ImportError.class, importError.getId());
+		ImportError error = (ImportError) companyDAO.getCompanyErrorById(importError.getId());
 		
-		if (importErrorLoaded != null) {
-			baseDAO.delete(importErrorLoaded);
+		if (error != null) {
+			error.setCause(importError.getCause());
+			error.setCauseEx(importError.getCauseEx());
+			baseDAO.saveOrUpdate(error);
+		} else {
+			baseDAO.saveOrUpdate(importError);
 		}
 		
-		baseDAO.saveOrUpdate(importError);
 	}
 
 	private String fixCodeReturned(String importCompany) {

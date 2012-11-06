@@ -13,7 +13,6 @@ import javax.persistence.TemporalType;
 @Table(name="CLARION_PURCHASE_IMPORT")
 public class ImportPurchaseError {
 	
-
 	@Id
 	@Column(name="ID_PURCHASE")
 	private Long id;
@@ -59,6 +58,26 @@ public class ImportPurchaseError {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	
+	public static ImportPurchaseError exError(String message) {
+		ImportPurchaseError purchaseError = new ImportPurchaseError();
+		purchaseError.setCauseEx(message);
+		
+		return purchaseError;
+	}
+	
+	public static ImportPurchaseError internalError(String message) {
+		ImportPurchaseError purchaseError = new ImportPurchaseError();
+		purchaseError.setCause(message);
+		
+		return purchaseError;
+	}
+	
+	public ImportPurchaseError purchaseId(Long id) {
+		this.setId(id);
+		return this;
 	}
 	
 	

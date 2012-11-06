@@ -42,7 +42,7 @@ public class ImportCompanyAspect {
 	
 	
 	
-	@Around("methodImporCompany()")
+	//@Around("methodImporCompany()")
 	public Object importCompanyToClarionSystem(ProceedingJoinPoint join) throws Throwable {
 		Map<String, String> errors = new HashMap<String, String>();
 		Object proceed = null;
@@ -147,7 +147,7 @@ public class ImportCompanyAspect {
 	}
 	
 	
-	@Pointcut("execution(* br.com.kohen.eventmanager.ecommerce.service.impl.ViewCompanyRelationshipServiceImpl.saveRelationProvider(..))")
+	//@Pointcut("execution(* br.com.kohen.eventmanager.ecommerce.service.impl.ViewCompanyRelationshipServiceImpl.saveRelationProvider(..))")
 	public void methodImporCompany(){}
 	
 	

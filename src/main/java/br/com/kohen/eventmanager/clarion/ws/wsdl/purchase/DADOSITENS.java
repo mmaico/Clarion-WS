@@ -6,6 +6,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import br.com.kohen.eventmanager.clarion.ws.service.PurchaseImportServiceImpl.InfoExport;
+import br.com.kohen.eventmanager.commons.entity.Purchase;
+import br.com.kohen.eventmanager.commons.entity.PurchaseItem;
+
 
 /**
  * <p>Java class for DADOSITENS complex type.
@@ -142,5 +146,17 @@ public class DADOSITENS {
     public void setVALORUNIT(String value) {
         this.valorunit = value;
     }
+    
+    public static DADOSITENS build(PurchaseItem item, InfoExport info) {
+    	DADOSITENS dadosItens = new DADOSITENS();
+    	
+    	dadosItens.setCODIGO(item.getProduct().getExternalCode().toString());
+		dadosItens.setQUANTIDADE(item.getQtd().toString());
+		dadosItens.setVALORUNIT(item.getPrice().toString());
+		dadosItens.setTES(info.tes);
+    
+		return dadosItens;
+    }
+    
 
 }

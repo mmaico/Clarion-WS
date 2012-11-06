@@ -54,7 +54,7 @@ public class ImportPurchaseAspect {
 				LOG.debug("############### -------> A empresa responsavel pelo pagamento esta nula ----> abortado o processo");
 			}
 			
-			messageReturned = purchaseImportService.importPurchase(new ArrayList<ShoppingCartItemVO>(itens), company);
+			messageReturned =  null; //purchaseImportService.importPurchase(new ArrayList<ShoppingCartItemVO>(itens), company);
 			
 			if (!NumberUtils.isNumber(messageReturned)) {
 				LOG.debug("############### -------> Houve erro na importacao e o metodo de servico nao sera chamado " + messageReturned );

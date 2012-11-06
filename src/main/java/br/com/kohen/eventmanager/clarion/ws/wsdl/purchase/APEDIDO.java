@@ -6,6 +6,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import br.com.kohen.eventmanager.clarion.ws.service.PurchaseImportServiceImpl.InfoExport;
+import br.com.kohen.eventmanager.commons.entity.Purchase;
+import br.com.kohen.eventmanager.commons.enums.Language;
+
 
 /**
  * <p>Java class for APEDIDO complex type.
@@ -210,6 +214,18 @@ public class APEDIDO {
 		this.reciss = reciss;
 	}
 
+	public static APEDIDO build(InfoExport info, Purchase purchase) {
+		APEDIDO pedido = new APEDIDO();
+		
+		pedido.setCHAVE(info.chave);
+		pedido.setCODPVBOX(purchase.getId().toString());
+		pedido.setMOEDA(purchase.getLang() == Language.PT ? "1" : "2");
+		pedido.setCUSTO(info.custo);
+		pedido.setRECISS(info.reciss);
+		
+		return pedido;
+		
+	}
     
     
 }
