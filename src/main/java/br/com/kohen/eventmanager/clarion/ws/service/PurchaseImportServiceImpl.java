@@ -2,6 +2,9 @@ package br.com.kohen.eventmanager.clarion.ws.service;
 
 import static br.com.kohen.eventmanager.commons.utils.StringUtils.isNullOrEmpty;
 
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -110,6 +113,13 @@ public class PurchaseImportServiceImpl {
 		ARRAYOFDADOSITENS arrayDados = new ARRAYOFDADOSITENS();
 		
 		List<PurchaseItem> purchseItems = purchase.getPurchseItems();
+		sortItems(purchseItems);
+		
+		//Pega o produto com maior valor e envia como codigo do centro de custo.
+		Long code = purchseItems.get(0).getProduct().getCode();
+		
+		pedido.setCUSTO(code == null ? "" : code.toString());
+		
 		for (PurchaseItem purchaseItem : purchseItems) {
 			
 			if (purchaseItem.getProduct().getExternalCode() == null) {
@@ -158,6 +168,21 @@ public class PurchaseImportServiceImpl {
 			baseDAO.saveOrUpdate(importError);
 		}
 		
+	}
+	
+	public void sortItems(List<PurchaseItem> purchseItems) {
+		Collections.sort(purchseItems, new Comparator<PurchaseItem>() {
+
+			@Override
+			public int compare(PurchaseItem item1, PurchaseItem itemTwo) {
+				
+				BigDecimal totalItem1 = item1.getPrice().multiply(new BigDecimal(item1.getQtd()));
+				BigDecimal totalItemTwo = itemTwo.getPrice().multiply(new BigDecimal(itemTwo.getQtd()));
+				
+				return totalItemTwo.compareTo(totalItem1);
+			}
+			
+		});
 	}
 	
 	
