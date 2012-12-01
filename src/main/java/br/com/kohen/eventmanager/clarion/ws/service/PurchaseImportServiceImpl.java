@@ -115,11 +115,6 @@ public class PurchaseImportServiceImpl {
 		List<PurchaseItem> purchseItems = purchase.getPurchseItems();
 		sortItems(purchseItems);
 		
-		//Pega o produto com maior valor e envia como codigo do centro de custo.
-		Long code = purchseItems.get(0).getProduct().getCode();
-		
-		pedido.setRECISS(code == null ? "" : code.toString());
-		
 		for (PurchaseItem purchaseItem : purchseItems) {
 			
 			if (purchaseItem.getProduct().getExternalCode() == null) {

@@ -220,7 +220,7 @@ public class APEDIDO {
 		pedido.setCHAVE(info.chave);
 		pedido.setCODPVBOX(purchase.getId().toString());
 		pedido.setMOEDA(purchase.getLang() == Language.PT ? "1" : "2");
-		//pedido.setRECISS(info.reciss);
+		pedido.setRECISS(info.reciss);
 		pedido.setCUSTO(info.custo);
 		
 		return pedido;
