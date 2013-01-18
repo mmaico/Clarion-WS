@@ -104,7 +104,7 @@ public class CompanyImportServiceImpl {
 			
 			if (!NumberUtils.isNumber(codeFixed)) {
 				company.setCode(null);
-				ImportError importError = ImportError.exError(validateMessage).companyId(company.getId());
+				ImportError importError = ImportError.exError(importCompany).companyId(company.getId());
 				saveErrorInDatabase(importError);
 				
 				return error("invalid.code.returned", "Erro na importacao " + codeFixed);
