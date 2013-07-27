@@ -634,7 +634,7 @@ public class GRAVADADOS {
     		
     		if (address.getAddressType() == AddressType.BUSINESS) {
     			companyvo.setBAIRRO(address.getNeighborhood() == null ? "" : address.getNeighborhood().toUpperCase() );
-    			companyvo.setCEP(address.getZipCode() == null ? "" : address.getZipCode() );
+    			companyvo.setCEP(address.getZipCode() == null ? "" : address.getZipCode().replaceAll("-", ""));
     			companyvo.setCOMPLTO(address.getComplement() == null ? "" : address.getComplement().toUpperCase() );
     			
     			companyvo.setNUMERO(address.getNumber() == null ? "" : address.getNumber());
