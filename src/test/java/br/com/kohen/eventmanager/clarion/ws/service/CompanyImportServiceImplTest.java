@@ -1,9 +1,7 @@
 package br.com.kohen.eventmanager.clarion.ws.service;
 
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.junit.Before;
@@ -14,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.com.kohen.eventmanager.clarion.ws.dao.CompanyImportDAO;
+import br.com.kohen.eventmanager.clarion.service.impl.CompanyImportServiceImpl;
 import br.com.kohen.eventmanager.commons.config.KProperties;
 import br.com.kohen.eventmanager.commons.config.PropertiesAcessor;
 import br.com.kohen.eventmanager.commons.entity.Company;
@@ -27,7 +25,7 @@ public class CompanyImportServiceImplTest {
 	private CompanyImportServiceImpl importService;
 	
 	@Mock
-	private CompanyImportDAO companyImportDAO;
+	private CompanyWsService companyWsService;
 	
 	@Mock
 	private Log log;
@@ -43,27 +41,26 @@ public class CompanyImportServiceImplTest {
 	
 	
 	@Test
-	public void shouldReturnErrorsWithPropertiesDisabled() {
+	public void shouldDoNothingWhenDisabled() {
 		
 		when(properties.loadSystemProperty().get("import.clarion.enabled", Boolean.class)).thenReturn(false);
 		
-		Map<String, String> errors = importService.importCompany(new Company());
+		importService.importCompany(new Company());
 		
-		assertTrue(errors.containsKey("not.available"));
+		verifyNoMoreInteractions(companyWsService);
+		
 	}
 	
 
 	@Test
-	public void shouldReturnErrorsWithPropertiesNull() {
+	public void shouldDoNothingWhenNull() {
 		
 		when(properties.loadSystemProperty().get("import.clarion.enabled", Boolean.class)).thenReturn(null);
 		
-		Map<String, String> errors = importService.importCompany(new Company());
+		importService.importCompany(new Company());
 		
-		assertTrue(errors.containsKey("not.available"));
+		verifyNoMoreInteractions(companyWsService);
 	}
-	
-	
 	
 
 }

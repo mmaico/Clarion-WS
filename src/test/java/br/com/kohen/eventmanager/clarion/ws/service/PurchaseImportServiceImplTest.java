@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import br.com.kohen.eventmanager.clarion.service.impl.PurchaseImportServiceImpl;
 import br.com.kohen.eventmanager.commons.entity.PurchaseItem;
 
 public class PurchaseImportServiceImplTest {
