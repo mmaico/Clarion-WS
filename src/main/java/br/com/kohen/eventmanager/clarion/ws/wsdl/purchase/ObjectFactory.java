@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the br.com.kohen.eventmanager.plugin.clarion.wsdl.purchase package. 
+ * generated in the purchase package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -23,10 +23,34 @@ public class ObjectFactory {
 
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: br.com.kohen.eventmanager.plugin.clarion.wsdl.purchase
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: purchase
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link DADOSCR }
+     * 
+     */
+    public DADOSCR createDADOSCR() {
+        return new DADOSCR();
+    }
+
+    /**
+     * Create an instance of {@link GRAVADADOS }
+     * 
+     */
+    public GRAVADADOS createGRAVADADOS() {
+        return new GRAVADADOS();
+    }
+
+    /**
+     * Create an instance of {@link DADOSITENS }
+     * 
+     */
+    public DADOSITENS createDADOSITENS() {
+        return new DADOSITENS();
     }
 
     /**
@@ -38,11 +62,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GRAVADADOS }
+     * Create an instance of {@link ARRAYOFDADOSCR }
      * 
      */
-    public GRAVADADOS createGRAVADADOS() {
-        return new GRAVADADOS();
+    public ARRAYOFDADOSCR createARRAYOFDADOSCR() {
+        return new ARRAYOFDADOSCR();
     }
 
     /**
@@ -59,14 +83,6 @@ public class ObjectFactory {
      */
     public ARRAYOFDADOSITENS createARRAYOFDADOSITENS() {
         return new ARRAYOFDADOSITENS();
-    }
-
-    /**
-     * Create an instance of {@link DADOSITENS }
-     * 
-     */
-    public DADOSITENS createDADOSITENS() {
-        return new DADOSITENS();
     }
 
 }

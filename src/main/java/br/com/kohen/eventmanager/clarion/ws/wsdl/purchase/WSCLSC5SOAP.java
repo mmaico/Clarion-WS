@@ -31,8 +31,8 @@ public interface WSCLSC5SOAP {
      */
     @WebMethod(operationName = "GRAVADADOS", action = "http://189.2.170.19:81/GRAVADADOS")
     @WebResult(name = "GRAVADADOSRESULT", targetNamespace = "http://189.2.170.19:81/")
-    @RequestWrapper(localName = "GRAVADADOS", targetNamespace = "http://189.2.170.19:81/", className = "br.com.kohen.eventmanager.plugin.clarion.wsdl.purchase.GRAVADADOS")
-    @ResponseWrapper(localName = "GRAVADADOSRESPONSE", targetNamespace = "http://189.2.170.19:81/", className = "br.com.kohen.eventmanager.plugin.clarion.wsdl.purchase.GRAVADADOSRESPONSE")
+    @RequestWrapper(localName = "GRAVADADOS", targetNamespace = "http://189.2.170.19:81/", className = "purchase.GRAVADADOS")
+    @ResponseWrapper(localName = "GRAVADADOSRESPONSE", targetNamespace = "http://189.2.170.19:81/", className = "purchase.GRAVADADOSRESPONSE")
     public String gravadados(
         @WebParam(name = "PEDIDO", targetNamespace = "http://189.2.170.19:81/")
         APEDIDO pedido);

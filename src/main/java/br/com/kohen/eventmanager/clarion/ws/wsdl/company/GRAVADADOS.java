@@ -1,29 +1,11 @@
 
 package br.com.kohen.eventmanager.clarion.ws.wsdl.company;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import br.com.kohen.eventmanager.clarion.ws.service.CompanyImportServiceImpl;
-import br.com.kohen.eventmanager.commons.dao.CommonBaseDAO;
-import br.com.kohen.eventmanager.commons.entity.Address;
-import br.com.kohen.eventmanager.commons.entity.City;
-import br.com.kohen.eventmanager.commons.entity.Company;
-import br.com.kohen.eventmanager.commons.entity.Contact;
-import br.com.kohen.eventmanager.commons.entity.Country;
-import br.com.kohen.eventmanager.commons.entity.State;
-import br.com.kohen.eventmanager.commons.enums.AddressType;
-import br.com.kohen.eventmanager.commons.enums.ContactType;
-import br.com.kohen.eventmanager.commons.service.impl.ServiceLocator;
-import br.com.kohen.eventmanager.commons.utils.StringUtils;
 
 
 /**
@@ -90,8 +72,6 @@ import br.com.kohen.eventmanager.commons.utils.StringUtils;
 @XmlRootElement(name = "GRAVADADOS")
 public class GRAVADADOS {
 
-	private static final Log LOG = LogFactory.getLog(GRAVADADOS.class);
-	
     @XmlElement(name = "CHAVE", required = true)
     protected String chave;
     @XmlElement(name = "CODIGO", required = true)
@@ -613,187 +593,5 @@ public class GRAVADADOS {
         this.pais = value;
     }
 
-    
-    public static GRAVADADOS convertToGravados(Company company) {
-    	LOG.debug("################### ----------> Iniciando o parse da company para GRAVADOS");
-    	
-    	GRAVADADOS companyvo = new GRAVADADOS();
-    	companyvo.setCODIGO("333");
-    	companyvo.setCHAVE("ABC1000");
-    	companyvo.setIE(company.getIe() == null ? "" : company.getIe() );
-    	companyvo.setIM("");
-    	companyvo.setNOME(company.getName() == null ? "" : company.getName().toUpperCase());
-    	companyvo.setNOMEFANT(company.getTradingName());
-    	
-    	CommonBaseDAO baseDAO = (CommonBaseDAO)ServiceLocator.getBean("commonBaseDAO");
-    	
-    	LOG.debug("################### ----------> Dados basicos completo o parse...");
-    	List<Address> addresss = company.getAddresss();
-    	for (Address address : addresss) {
-    		LOG.debug("################### ----------> Iniciando Parse de enderecos...");
-    		
-    		if (address.getAddressType() == AddressType.BUSINESS) {
-    			companyvo.setBAIRRO(address.getNeighborhood() == null ? "" : address.getNeighborhood().toUpperCase() );
-    			companyvo.setCEP(address.getZipCode() == null ? "" : address.getZipCode().replaceAll("-", ""));
-    			companyvo.setCOMPLTO(address.getComplement() == null ? "" : address.getComplement().toUpperCase() );
-    			
-    			companyvo.setNUMERO(address.getNumber() == null ? "" : address.getNumber());
-    			companyvo.setENDERECO(address.getStreet() == null ? "" : address.getStreet().toUpperCase());
-    			Country country = address.getCountry();
-    			
-    			if (country.getId().equals(31l)) {
-    				LOG.debug("################### ----------> Empresa nacional...");
-    				company.getId();	
-    				companyvo.setCNPJ(StringUtils.removeEspecialChars(company.getCnpj()));
-    				
-    				State stateLoaded = (State) baseDAO.findById(State.class, address.getState().getId());
-    				
-        			companyvo.setUF(stateLoaded.getName());
-        			
-        			
-        			City city = (City) baseDAO.findById(City.class, address.getCityy().getId());
-        			
-        			companyvo.setCIDADE(city.getCode());
-    				
-    			} else {
-    				LOG.debug("################### ----------> Empresa internacional...");
-    				companyvo.setCNPJ("140");
-    				companyvo.setUF("EX");
-    				companyvo.setCIDADE("");
-    			}
-    			
-    			Country countryLoaded = (Country) baseDAO.findById(Country.class, address.getCountry().getId());
-    			
-    			LOG.debug("################### ----------> Pais do endereco de cobranca da empresa: "+ address.getCountry().getCodeBacen() );
-    			companyvo.setPAIS(countryLoaded.getId() == null ? "": countryLoaded.getCodeBacen().toString());
-    		}
-    		
-		}
-    	
-    	LOG.debug("################### ----------> Iniciando parse de contato...");
-    	
-    	List<Contact> contacts = company.getContacts();
-    	for (Contact contact : contacts) {
-    		LOG.debug("################### ----------> Iterando contatos...");
-    		if(contact.getContactType() == ContactType.PRIMARY) {
-    			LOG.debug("################### ----------> Contato primario encontrado, fazendo parse...");
-    			companyvo.setCONTATO(contact.getName());
-    			companyvo.setCARGO(contact.getPosition() == null ? "" : contact.getPosition().toUpperCase() );
-    			companyvo.setTEL(contact.getPhone() == null ? "" : contact.getPhone());
-    			companyvo.setTELCEL(contact.getCellPhone() == null ? "" : contact.getCellPhone());
-    			companyvo.setEMAIL(contact.getEmail() == null ? "" :contact.getEmail().toUpperCase() );
-    		}
-		}
-    	
-    	return companyvo;
-    	
-    }
-    
-    
-    public static String validate(Company company) {
-    	StringBuilder error = new StringBuilder();
-    	
-    	GRAVADADOS companyvo = new GRAVADADOS();
-    	companyvo.setCODIGO(company.getId().toString());
-    	companyvo.setCHAVE("ABC1000");
-    	companyvo.setIE(company.getIe());
-    	companyvo.setIM("");
-    	
-    	if (com.mysql.jdbc.StringUtils.isNullOrEmpty(company.getName())) {
-    		error.append(" Nome da empresa esta vazio --");
-    	} else {
-    		companyvo.setNOME(company.getName());
-    	}
-    	
-
-    	
-    	if (com.mysql.jdbc.StringUtils.isNullOrEmpty(company.getTradingName())) {
-    		error.append(" Nome Fantasia esta vazio --");
-    	} else {
-    		companyvo.setNOMEFANT(company.getTradingName());
-    	}
-    	
-    	List<Address> addresss = company.getAddresss();
-    	boolean hasBusinessAdress = false;
-    	
-    	for (Address address : addresss) {
-			
-    		if (address.getAddressType() == AddressType.BUSINESS) {
-    			hasBusinessAdress = true;
-    			companyvo.setBAIRRO(address.getNeighborhood());
-    			companyvo.setCEP(address.getZipCode());
-    			companyvo.setCOMPLTO(address.getComplement());
-    			
-    			companyvo.setNUMERO(address.getNumber());
-    			companyvo.setENDERECO(address.getStreet());
-    			
-    			if (address.getCountry() != null && address.getCountry().getId().equals(31l)) {
-    				if (com.mysql.jdbc.StringUtils.isNullOrEmpty(company.getCnpj())) {
-    					error.append(" Empresa brasileira sem cnpj ---");
-    				} else {
-    					companyvo.setCNPJ(StringUtils.removeEspecialChars(company.getCnpj()));
-    					
-    				}
-    				
-    				if (address.getState() == null || com.mysql.jdbc.StringUtils.isNullOrEmpty(address.getState().getName())) {
-    					error.append(" Empresa brasileira sem estado ---");
-    				} else {
-    					companyvo.setUF(address.getState().getName());
-    				}
-    				
-    				if (address.getCityy() == null || com.mysql.jdbc.StringUtils.isNullOrEmpty(address.getCityy().getName())) {
-    					error.append(" Empresa brasileira sem cidade ---");
-    				} else {
-    					companyvo.setCIDADE(address.getCityy().getCode());
-    				}
-    				
-    				
-    			} else {
-    				if (address.getCountry() == null) {
-    					error.append(" Endereco de cobranca sem pais ---");
-    				} else {
-    					companyvo.setCNPJ("140");
-        				companyvo.setUF("EX");
-        				companyvo.setCIDADE("");
-    				}
-    				
-    			}
-    			if (address.getCountry() == null) {
-    				error.append(" Empresa Sem Pais no endereco de cobraca ---");
-    			} else {
-    				if (address.getCountry().getCodeBacen() == null) {
-    					error.append(" Empresa com Pais sem codigo bacen ---");
-    				} else {
-    					companyvo.setPAIS(address.getCountry().getCodeBacen());
-    				}
-    				
-    			}
-    			
-    		}
-    		
-		}
-    	
-    	if (!hasBusinessAdress) {
-    		error.append(" Nao tem informacao de endereco de cobranca---");
-    	}
-    	
-    	List<Contact> contacts = company.getContacts();
-    	for (Contact contact : contacts) {
-			
-    		if(contact.getContactType() == ContactType.PRIMARY) {
-    			companyvo.setCARGO(contact.getPosition());
-    			companyvo.setTEL(contact.getPhone());
-    			companyvo.setTELCEL(contact.getCellPhone());
-    			companyvo.setEMAIL(contact.getEmail());
-    		}
-		}
-    	
-    	return error.toString();
-    	
-    }
-    
-    
-    
-    
     
 }

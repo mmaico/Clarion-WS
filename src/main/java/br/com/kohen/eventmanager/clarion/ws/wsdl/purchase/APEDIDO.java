@@ -6,10 +6,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import br.com.kohen.eventmanager.clarion.ws.service.PurchaseImportServiceImpl.InfoExport;
-import br.com.kohen.eventmanager.commons.entity.Purchase;
-import br.com.kohen.eventmanager.commons.enums.Language;
-
 
 /**
  * <p>Java class for APEDIDO complex type.
@@ -27,6 +23,8 @@ import br.com.kohen.eventmanager.commons.enums.Language;
  *         &lt;element name="CUSTO" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="ITENS" type="{http://189.2.170.19:81/}ARRAYOFDADOSITENS"/>
  *         &lt;element name="MOEDA" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="PARCELAS" type="{http://189.2.170.19:81/}ARRAYOFDADOSCR"/>
+ *         &lt;element name="RECISS" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -43,6 +41,7 @@ import br.com.kohen.eventmanager.commons.enums.Language;
     "custo",
     "itens",
     "moeda",
+    "parcelas",
     "reciss"
 })
 public class APEDIDO {
@@ -59,9 +58,11 @@ public class APEDIDO {
     protected ARRAYOFDADOSITENS itens;
     @XmlElement(name = "MOEDA", required = true)
     protected String moeda;
+    @XmlElement(name = "PARCELAS", required = true)
+    protected ARRAYOFDADOSCR parcelas;
     @XmlElement(name = "RECISS", required = true)
     protected String reciss;
-    
+
     /**
      * Gets the value of the chave property.
      * 
@@ -206,26 +207,52 @@ public class APEDIDO {
         this.moeda = value;
     }
 
-	public String getReciss() {
-		return reciss;
-	}
+    /**
+     * Gets the value of the parcelas property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ARRAYOFDADOSCR }
+     *     
+     */
+    public ARRAYOFDADOSCR getPARCELAS() {
+        return parcelas;
+    }
 
-	public void setRECISS(String reciss) {
-		this.reciss = reciss;
-	}
+    /**
+     * Sets the value of the parcelas property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ARRAYOFDADOSCR }
+     *     
+     */
+    public void setPARCELAS(ARRAYOFDADOSCR value) {
+        this.parcelas = value;
+    }
 
-	public static APEDIDO build(InfoExport info, Purchase purchase) {
-		APEDIDO pedido = new APEDIDO();
-		
-		pedido.setCHAVE(info.chave);
-		pedido.setCODPVBOX(purchase.getId().toString());
-		pedido.setMOEDA(purchase.getLang() == Language.PT ? "1" : "2");
-		pedido.setRECISS(info.reciss);
-		pedido.setCUSTO(info.custo);
-		
-		return pedido;
-		
-	}
-    
-    
+    /**
+     * Gets the value of the reciss property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getRECISS() {
+        return reciss;
+    }
+
+    /**
+     * Sets the value of the reciss property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setRECISS(String value) {
+        this.reciss = value;
+    }
+
 }
