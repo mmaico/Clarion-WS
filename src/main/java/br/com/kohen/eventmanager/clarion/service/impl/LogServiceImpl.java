@@ -25,9 +25,9 @@ public class LogServiceImpl implements LogService {
 		ImportError errorLoaded = (ImportError) baseDAO.findById(ImportError.class, error.getId());
 		
 		if (errorLoaded != null) {
-			error.setCause(error.getCause());
-			error.setCauseEx(error.getCauseEx());
-			baseDAO.saveOrUpdate(error);
+			errorLoaded.setCause(error.getCause());
+			errorLoaded.setCauseEx(error.getCauseEx());
+			baseDAO.saveOrUpdate(errorLoaded);
 		} else {
 			baseDAO.saveOrUpdate(error);
 		}
@@ -39,9 +39,9 @@ public class LogServiceImpl implements LogService {
 		ImportPurchaseError errorLoaded = (ImportPurchaseError) baseDAO.findById(ImportPurchaseError.class, error.getId());
 		
 		if (errorLoaded != null) {
-			error.setCause(error.getCause());
-			error.setCauseEx(error.getCauseEx());
-			baseDAO.saveOrUpdate(error);
+			errorLoaded.setCause(error.getCause());
+			errorLoaded.setCauseEx(error.getCauseEx());
+			baseDAO.saveOrUpdate(errorLoaded);
 		} else {
 			baseDAO.saveOrUpdate(error);
 		}

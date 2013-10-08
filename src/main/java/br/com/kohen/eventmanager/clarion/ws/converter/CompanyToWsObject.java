@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import br.com.kohen.eventmanager.clarion.ws.utils.CompanyUtils;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.company.GRAVADADOS;
 import br.com.kohen.eventmanager.commons.entity.Address;
 import br.com.kohen.eventmanager.commons.entity.Company;
@@ -35,8 +36,8 @@ public class CompanyToWsObject {
 		gravadosCompany.setCHAVE(WS_KEY.getValue());
 		gravadosCompany.setIE(safeNull(company.getIe()));
 		gravadosCompany.setIM("");
-		gravadosCompany.setNOME(safeNull(company.getName()).toUpperCase());
-		gravadosCompany.setNOMEFANT(safeNull(company.getTradingName()).toUpperCase());
+		gravadosCompany.setNOME(CompanyUtils.treatName(company.getName()));
+		gravadosCompany.setNOMEFANT(CompanyUtils.treatName(company.getTradingName()));
 		gravadosCompany.setCNPJ(removeEspecialChars(safeNull(company.getCnpj())));
 		
 		if (isInternational(company)) {

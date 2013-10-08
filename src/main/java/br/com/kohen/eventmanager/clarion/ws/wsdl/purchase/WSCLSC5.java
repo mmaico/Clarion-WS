@@ -4,6 +4,7 @@ package br.com.kohen.eventmanager.clarion.ws.wsdl.purchase;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
+
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
@@ -20,18 +21,16 @@ import javax.xml.ws.WebServiceFeature;
  * 
  */
 @WebServiceClient(name = "WSCLSC5", targetNamespace = "http://189.2.170.19:81/", wsdlLocation = "http://189.2.170.19:81/ws/WSCLSC5.apw?WSDL")
-public class WSCLSC5
-    extends Service
-{
+public class WSCLSC5 extends Service {
 
     private final static URL WSCLSC5_WSDL_LOCATION;
-    private final static Logger logger = Logger.getLogger(purchase.WSCLSC5 .class.getName());
+    private final static Logger logger = Logger.getLogger(WSCLSC5.class.getName());
 
     static {
         URL url = null;
         try {
             URL baseUrl;
-            baseUrl = purchase.WSCLSC5 .class.getResource(".");
+            baseUrl = WSCLSC5.class.getResource(".");
             url = new URL(baseUrl, "http://189.2.170.19:81/ws/WSCLSC5.apw?WSDL");
         } catch (MalformedURLException e) {
             logger.warning("Failed to create URL for the wsdl Location: 'http://189.2.170.19:81/ws/WSCLSC5.apw?WSDL', retrying as a local file");

@@ -61,7 +61,7 @@ public class CompanyWsServiceImpl implements CompanyWsService {
 			return;
 		}
 		
-		company.setCode(response.getValueReturned().replace(":", "").trim());
+		company.setCode(response.getValueReturned());
 		
 		logService.deleteError(company);
 		baseDAO.saveOrUpdate(company);

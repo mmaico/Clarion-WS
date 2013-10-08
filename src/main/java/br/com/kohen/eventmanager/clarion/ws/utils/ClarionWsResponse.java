@@ -1,5 +1,6 @@
 package br.com.kohen.eventmanager.clarion.ws.utils;
 
+import static br.com.kohen.eventmanager.clarion.ws.utils.StringSafeNull.safeNull;
 import static org.apache.commons.lang.StringUtils.EMPTY;
 
 public class ClarionWsResponse {
@@ -9,7 +10,7 @@ public class ClarionWsResponse {
 	private String error = EMPTY;
 
 	public String getValueReturned() {
-		return valueReturned;
+		return safeNull(valueReturned).replaceAll(":", EMPTY).trim();
 	}
 
 	public void setValueReturned(String valueReturned) {
@@ -17,7 +18,7 @@ public class ClarionWsResponse {
 	}
 
 	public String getError() {
-		return error;
+		return error + " - " +  this.valueReturned;
 	}
 
 	public void setError(String error) {
@@ -25,7 +26,7 @@ public class ClarionWsResponse {
 	}
 	
 	public Boolean isValid() {
-		return error.isEmpty();
+		return error.isEmpty() && valueReturnedIsNumber();
 	}
 	
 	public static ClarionWsResponse build() {
@@ -40,5 +41,15 @@ public class ClarionWsResponse {
 	public ClarionWsResponse withError(String error) {
 		this.error = error;
 		return this;
+	}
+	
+	private Boolean valueReturnedIsNumber() {
+		
+		try {
+			Long.valueOf(safeNull(this.valueReturned).replaceAll(":", "").trim());
+			return Boolean.TRUE;
+		} catch (NumberFormatException e) {
+			return Boolean.FALSE;
+		}
 	}
 }

@@ -42,7 +42,7 @@ public class PurchaseImportServiceImpl implements PurchaseImportService {
 	private PropertiesAcessor properties = new PropertiesAcessor();
 	
 	
-	@Scheduled(fixedDelay=60000)
+	//@Scheduled(fixedDelay=60000)
 	public void processPurchases() {
 		
 		try {

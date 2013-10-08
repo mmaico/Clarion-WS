@@ -55,7 +55,7 @@ public class PurchaseWsServiceImpl implements PurchaseWsService {
 			return;
 		}
 		
-		purchase.setCode(response.getValueReturned().replace(":", "").trim());
+		purchase.setCode(response.getValueReturned());
 		
 		logService.deleteError(purchase);
 		baseDAO.saveOrUpdate(purchase);

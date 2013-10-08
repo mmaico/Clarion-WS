@@ -28,6 +28,14 @@ public class CompanyUtilsTest {
 	}
 	
 	@Test
+	public void shouldRemoveSpecialChars() {
+		String name = "Company Name -+=*%$#@";
+		String treatName = CompanyUtils.treatName(name);
+		
+		assertEquals("COMPANY NAME", treatName);
+	}
+	
+	@Test
 	public void shouldReturnFalseWhenCompanyNotIsInternatinal() {
 		Company company = new Company();
 		company.addAddress(nationalAddressStub());

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.kohen.eventmanager.clarion.dao.ClarionCompanyDAO;
+import br.com.kohen.eventmanager.clarion.service.CompanyImportService;
 import br.com.kohen.eventmanager.clarion.ws.service.CompanyWsService;
 import br.com.kohen.eventmanager.commons.config.PropertiesAcessor;
 import br.com.kohen.eventmanager.commons.dao.CommonBaseDAO;
@@ -19,7 +20,7 @@ import br.com.kohen.eventmanager.commons.entity.Company;
 @Component
 @Transactional
 @SuppressWarnings({"rawtypes"})
-public class CompanyImportServiceImpl {
+public class CompanyImportServiceImpl implements CompanyImportService {
 
 	private Log log = LogFactory.getLog(CompanyImportServiceImpl.class);
 	

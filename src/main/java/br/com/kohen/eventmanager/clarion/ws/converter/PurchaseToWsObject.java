@@ -3,6 +3,7 @@ package br.com.kohen.eventmanager.clarion.ws.converter;
 import static br.com.kohen.eventmanager.clarion.ws.utils.StringSafeNull.safeNull;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class PurchaseToWsObject {
 		DADOSCR dadoscr = new DADOSCR();
 		dadoscr.setNVALPARC("1");
 		
-		Date paymentDue = purchase.getPaymentDue();
+		Date paymentDue = getCurrentDate();
 		String quantity = WsInfoEnum.QUANTITY_DAYS_TO_PAY.getValue();
 		
 		Date dateToPay = DateUtil.addDayToDate(Integer.valueOf(quantity), paymentDue);
@@ -77,5 +78,9 @@ public class PurchaseToWsObject {
 		parcela.getDADOSCR().add(dadoscr);
 		
 		return parcela;
+	}
+
+	Date getCurrentDate() {
+		return Calendar.getInstance().getTime();
 	}
 }
