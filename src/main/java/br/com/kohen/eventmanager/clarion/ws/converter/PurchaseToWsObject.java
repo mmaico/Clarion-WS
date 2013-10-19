@@ -66,7 +66,7 @@ public class PurchaseToWsObject {
 		
 		ARRAYOFDADOSCR parcela = new ARRAYOFDADOSCR();
 		DADOSCR dadoscr = new DADOSCR();
-		dadoscr.setNVALPARC("1");
+		dadoscr.setNVALPARC(purchase.getTotal().toString());
 		
 		Date paymentDue = getCurrentDate();
 		String quantity = WsInfoEnum.QUANTITY_DAYS_TO_PAY.getValue();
