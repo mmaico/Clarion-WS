@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="CODPROTHEUS" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="CODPVBOX" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="CUSTO" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="EMPRESA" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="ITENS" type="{http://189.2.170.19:81/}ARRAYOFDADOSITENS"/>
  *         &lt;element name="MOEDA" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="PARCELAS" type="{http://189.2.170.19:81/}ARRAYOFDADOSCR"/>
@@ -39,6 +40,7 @@ import javax.xml.bind.annotation.XmlType;
     "codprotheus",
     "codpvbox",
     "custo",
+    "empresa",
     "itens",
     "moeda",
     "parcelas",
@@ -54,6 +56,8 @@ public class APEDIDO {
     protected String codpvbox;
     @XmlElement(name = "CUSTO", required = true)
     protected String custo;
+    @XmlElement(name = "EMPRESA", required = true)
+    protected String empresa;
     @XmlElement(name = "ITENS", required = true)
     protected ARRAYOFDADOSITENS itens;
     @XmlElement(name = "MOEDA", required = true)
@@ -254,5 +258,15 @@ public class APEDIDO {
     public void setRECISS(String value) {
         this.reciss = value;
     }
+    
+    public String getEMPRESA() {
+    	return this.empresa;
+    }
 
+    public void setEMPRESA(String empresa) {
+    	this.empresa = empresa;
+    }
+    
+    
+    
 }

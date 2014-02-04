@@ -56,7 +56,7 @@ public class CompanyWsServiceImpl implements CompanyWsService {
 			this.log.error("Erro ao exportar a empresa: " + company.getId() + " " + response.getError());
 			
 			ImportError importError = ImportError
-					.internalError(response.getError()).companyId(company.getId());
+					.exError(response.getError()).companyId(company.getId());
 			logService.saveCompanyError(importError);
 			return;
 		}

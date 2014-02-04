@@ -50,8 +50,8 @@ public interface WSCLSA1SOAP {
      */
     @WebMethod(operationName = "GRAVADADOS", action = "http://189.2.170.19:81/GRAVADADOS")
     @WebResult(name = "GRAVADADOSRESULT", targetNamespace = "http://189.2.170.19:81/")
-    @RequestWrapper(localName = "GRAVADADOS", targetNamespace = "http://189.2.170.19:81/", className = "br.com.kohen.eventmanager.plugin.clarion.wsdl.company.GRAVADADOS")
-    @ResponseWrapper(localName = "GRAVADADOSRESPONSE", targetNamespace = "http://189.2.170.19:81/", className = "br.com.kohen.eventmanager.plugin.clarion.wsdl.company.GRAVADADOSRESPONSE")
+    @RequestWrapper(localName = "GRAVADADOS", targetNamespace = "http://189.2.170.19:81/", className = "br.com.kohen.eventmanager.clarion.ws.wsdl.company.GRAVADADOS")
+    @ResponseWrapper(localName = "GRAVADADOSRESPONSE", targetNamespace = "http://189.2.170.19:81/", className = "br.com.kohen.eventmanager.clarion.ws.wsdl.company.GRAVADADOSRESPONSE")
     public String gravadados(
         @WebParam(name = "CHAVE", targetNamespace = "http://189.2.170.19:81/")
         String chave,

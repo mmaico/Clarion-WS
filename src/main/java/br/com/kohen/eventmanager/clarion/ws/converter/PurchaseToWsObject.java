@@ -45,6 +45,7 @@ public class PurchaseToWsObject {
 		apedido.setMOEDA(purchase.getLang() == Language.PT ? "1" : "2");
 		apedido.setRECISS(safeNull(reciss));
 		apedido.setCUSTO(safeNull(custo));
+		apedido.setEMPRESA("01");
 		
 		ARRAYOFDADOSCR plots = createPlots(purchase);
 		apedido.setPARCELAS(plots);

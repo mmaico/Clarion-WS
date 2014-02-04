@@ -1,5 +1,7 @@
 package br.com.kohen.eventmanager.clarion.dao.impl;
 
+import static br.com.kohen.eventmanager.commons.CompanyCategoryEnum.CLARION;
+
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -19,8 +21,8 @@ public class ClarionCompanyDAOImpl extends CommonBaseDAOHibernate implements Cla
 	@SuppressWarnings("unchecked")
 	public List<Company> getAllCompanyNotImported() {
 		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Company.class);
+		criteria.add(Restrictions.not(Restrictions.eq("companyCategory.id", CLARION.getId())));
 		criteria.add(Restrictions.isNull("code"));
-		
 		
 		return criteria.list();
 		

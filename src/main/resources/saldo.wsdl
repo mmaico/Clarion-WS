@@ -1,0 +1,65 @@
+<!-- Generated 20140123 11:54:57 by ADVPL WSDL Server 1.110216 / Protheus 
+	7.00.121227P-20130909 -->
+<definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema"
+	xmlns:s0="http://189.2.170.19:81/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://189.2.170.19:81/">
+	<types>
+		<s:schema elementFormDefault="qualified" targetNamespace="http://189.2.170.19:81/">
+			<s:element name="SALDOTITULO">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="CHAVE"
+							type="s:string" />
+						<s:element minOccurs="1" maxOccurs="1" name="EMPRESA"
+							type="s:string" />
+						<s:element minOccurs="1" maxOccurs="1" name="PEDIDO"
+							type="s:string" />
+						<s:element minOccurs="1" maxOccurs="1" name="PARCELA"
+							type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="SALDOTITULORESPONSE">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1" name="SALDOTITULORESULT"
+							type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+		</s:schema>
+	</types>
+	<message name="SALDOTITULOSOAPIN">
+		<part name="parameters" element="s0:SALDOTITULO" />
+	</message>
+	<message name="SALDOTITULOSOAPOUT">
+		<part name="parameters" element="s0:SALDOTITULORESPONSE" />
+	</message>
+	<portType name="WSCLSE5SOAP">
+		<operation name="SALDOTITULO">
+			<input message="s0:SALDOTITULOSOAPIN" />
+			<output message="s0:SALDOTITULOSOAPOUT" />
+		</operation>
+	</portType>
+	<binding name="WSCLSE5SOAP" type="s0:WSCLSE5SOAP">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
+			style="document" />
+		<operation name="SALDOTITULO">
+			<soap:operation soapAction="http://189.2.170.19:81/SALDOTITULO"
+				style="document" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+	</binding>
+	<service name="WSCLSE5">
+		<port name="WSCLSE5SOAP" binding="s0:WSCLSE5SOAP">
+			<soap:address location="http://189.2.170.19:81/ws/WSCLSE5.apw" />
+		</port>
+	</service>
+</definitions>

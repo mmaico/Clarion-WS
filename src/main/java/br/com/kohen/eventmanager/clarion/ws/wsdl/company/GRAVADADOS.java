@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 
 /**
  * <p>Java class for anonymous complex type.
@@ -593,5 +595,8 @@ public class GRAVADADOS {
         this.pais = value;
     }
 
+    public String toString() {
+    	return ToStringBuilder.reflectionToString(this);
+    }
     
 }
