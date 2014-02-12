@@ -28,4 +28,22 @@ public class CompanyUtils {
 		return safeNull(name).replaceAll("(:|\\|/|-|\\+|\\*|%|\\$|#|@|!|=)", StringUtils.EMPTY)
 				.toUpperCase().trim();
 	}
+	
+	public static Boolean isValidProtheusCode(String value) {
+		
+		String valueTreat = value.replaceAll("[:-]", "").trim();
+		
+		try {
+			Long.valueOf(valueTreat);
+		} catch (NumberFormatException e) {
+			return Boolean.FALSE;
+		}
+		
+		return Boolean.TRUE;
+	}
+	
+	public static String treatProtheusCode(String value) {
+		
+		return value.replaceAll("[:-]", "").trim();
+	}
 }

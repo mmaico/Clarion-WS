@@ -1,6 +1,8 @@
 package br.com.kohen.eventmanager.clarion.ws.utils;
 
 import static junit.framework.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,6 +47,35 @@ public class CompanyUtilsTest {
 		assertEquals(Boolean.FALSE, international);
 	}
 
+	@Test
+	public void shouldReturnTrueWhenValidCode() {
+		String textReturned = "  : 00076001 - ";
+		
+		Boolean validProtheusCode = CompanyUtils.isValidProtheusCode(textReturned);
+		
+		assertThat(validProtheusCode, is(Boolean.TRUE));
+	}
+	
+	@Test
+	public void shouldReturnFalseWhenValidCode() {
+		String textReturned = "  : iieodError - ";
+		
+		Boolean validProtheusCode = CompanyUtils.isValidProtheusCode(textReturned);
+		
+		assertThat(validProtheusCode, is(Boolean.FALSE));
+	}
+	
+	@Test
+	public void shouldExtractCodeOfMessage() {
+		String textReturned = "  : 00076001 - ";
+		String valueExpected = "00076001";
+		
+		String treatProtheusCode = CompanyUtils.treatProtheusCode(textReturned);
+		
+		assertThat(treatProtheusCode, is(valueExpected));
+	}
+	
+	
 	private Address nationalAddressStub() {
 		Address address = new Address();
 		address.setAddressType(AddressType.BUSINESS);

@@ -10,7 +10,7 @@ public class ClarionWsResponse {
 	private String error = EMPTY;
 
 	public String getValueReturned() {
-		return safeNull(valueReturned).replaceAll(":", EMPTY).trim();
+		return safeNull(valueReturned).replaceAll("[:-]", EMPTY).trim();
 	}
 
 	public void setValueReturned(String valueReturned) {
@@ -46,7 +46,7 @@ public class ClarionWsResponse {
 	private Boolean valueReturnedIsNumber() {
 		
 		try {
-			Long.valueOf(safeNull(this.valueReturned).replaceAll(":", "").trim());
+			Long.valueOf(safeNull(this.valueReturned).replaceAll("[:-]", "").trim());
 			return Boolean.TRUE;
 		} catch (NumberFormatException e) {
 			return Boolean.FALSE;

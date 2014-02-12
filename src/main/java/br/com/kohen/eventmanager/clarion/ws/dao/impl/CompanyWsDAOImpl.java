@@ -1,10 +1,13 @@
 package br.com.kohen.eventmanager.clarion.ws.dao.impl;
 
+import static br.com.kohen.eventmanager.clarion.ws.utils.CompanyUtils.isValidProtheusCode;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import br.com.kohen.eventmanager.clarion.ws.dao.CompanyWsDAO;
 import br.com.kohen.eventmanager.clarion.ws.utils.ClarionWsResponse;
+import br.com.kohen.eventmanager.clarion.ws.utils.CompanyUtils;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.company.GRAVADADOS;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.company.WSCLSA1;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.company.WSCLSA1SOAP;
@@ -56,6 +59,11 @@ public class CompanyWsDAOImpl implements CompanyWsDAO {
 			
 				return ClarionWsResponse.build().withValueReturned(code);
 			} catch(Exception e) {
+				
+				if (isValidProtheusCode(e.getMessage())) {
+					return ClarionWsResponse.build().withValueReturned(e.getMessage());
+				}
+				
 				logger.error("Erro ao iniciar o servico do CompanyWS" + e.getMessage());
 				return ClarionWsResponse.build().withError(e.getMessage());
 			}
