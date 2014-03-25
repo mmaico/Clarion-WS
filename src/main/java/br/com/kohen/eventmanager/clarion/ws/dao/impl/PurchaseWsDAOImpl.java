@@ -1,5 +1,7 @@
 package br.com.kohen.eventmanager.clarion.ws.dao.impl;
 
+import static br.com.kohen.eventmanager.clarion.ws.utils.CodeHandlerUtils.isValidProtheusCode;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +27,11 @@ public class PurchaseWsDAOImpl implements PurchaseWsDAO {
 			
 			return ClarionWsResponse.build().withValueReturned(code);
 		}catch(Exception e) {
+			
+			if (isValidProtheusCode(e.getMessage())) {
+				return ClarionWsResponse.build().withValueReturned(e.getMessage());
+			}
+			
 			logger.error("Erro ao iniciar o servico do PurchaseWS" + e.getMessage());
 			return ClarionWsResponse.build().withError(e.getMessage());
 		}
