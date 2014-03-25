@@ -25,7 +25,6 @@ public class ClarionPurchaseDAOImpl extends CommonBaseDAOHibernate implements Cl
 		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Purchase.class);
 		criteria.add(Restrictions.isNull("code"));
 		criteria.add(Restrictions.eq("status", PurchaseStatus.ACTIVE));
-		criteria.add(Restrictions.not(Restrictions.eq("responsible.companyCategory.id", CLARION.getId())));
 		
 		return criteria.list();
 	}
