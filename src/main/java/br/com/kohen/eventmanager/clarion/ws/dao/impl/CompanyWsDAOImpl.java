@@ -1,12 +1,13 @@
 package br.com.kohen.eventmanager.clarion.ws.dao.impl;
 
-import static br.com.kohen.eventmanager.clarion.ws.utils.CompanyUtils.isValidProtheusCode;
+import static br.com.kohen.eventmanager.clarion.ws.utils.CodeHandlerUtils.isValidProtheusCode;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import br.com.kohen.eventmanager.clarion.ws.dao.CompanyWsDAO;
 import br.com.kohen.eventmanager.clarion.ws.utils.ClarionWsResponse;
+import br.com.kohen.eventmanager.clarion.ws.utils.CodeHandlerUtils;
 import br.com.kohen.eventmanager.clarion.ws.utils.CompanyUtils;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.company.GRAVADADOS;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.company.WSCLSA1;

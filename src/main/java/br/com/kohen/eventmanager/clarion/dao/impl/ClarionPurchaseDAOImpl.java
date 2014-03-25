@@ -1,5 +1,7 @@
 package br.com.kohen.eventmanager.clarion.dao.impl;
 
+import static br.com.kohen.eventmanager.commons.CompanyCategoryEnum.CLARION;
+
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -23,6 +25,7 @@ public class ClarionPurchaseDAOImpl extends CommonBaseDAOHibernate implements Cl
 		Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Purchase.class);
 		criteria.add(Restrictions.isNull("code"));
 		criteria.add(Restrictions.eq("status", PurchaseStatus.ACTIVE));
+		criteria.add(Restrictions.not(Restrictions.eq("responsible.companyCategory.id", CLARION.getId())));
 		
 		return criteria.list();
 	}

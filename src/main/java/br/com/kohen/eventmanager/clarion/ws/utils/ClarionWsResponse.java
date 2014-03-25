@@ -1,5 +1,7 @@
 package br.com.kohen.eventmanager.clarion.ws.utils;
 
+import static br.com.kohen.eventmanager.clarion.ws.utils.CodeHandlerUtils.haveAProtheusCode;
+import static br.com.kohen.eventmanager.clarion.ws.utils.CodeHandlerUtils.isValidProtheusCode;
 import static br.com.kohen.eventmanager.clarion.ws.utils.StringSafeNull.safeNull;
 import static org.apache.commons.lang.StringUtils.EMPTY;
 
@@ -10,7 +12,7 @@ public class ClarionWsResponse {
 	private String error = EMPTY;
 
 	public String getValueReturned() {
-		return safeNull(valueReturned).replaceAll("[:-]", EMPTY).trim();
+		return haveAProtheusCode(safeNull(valueReturned));
 	}
 
 	public void setValueReturned(String valueReturned) {
@@ -26,7 +28,7 @@ public class ClarionWsResponse {
 	}
 	
 	public Boolean isValid() {
-		return error.isEmpty() && valueReturnedIsNumber();
+		return error.isEmpty() && isValidProtheusCode(valueReturned);
 	}
 	
 	public static ClarionWsResponse build() {
@@ -43,13 +45,4 @@ public class ClarionWsResponse {
 		return this;
 	}
 	
-	private Boolean valueReturnedIsNumber() {
-		
-		try {
-			Long.valueOf(safeNull(this.valueReturned).replaceAll("[:-]", "").trim());
-			return Boolean.TRUE;
-		} catch (NumberFormatException e) {
-			return Boolean.FALSE;
-		}
-	}
 }

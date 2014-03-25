@@ -28,6 +28,8 @@ public class PurchaseToWsObject {
 	
 	private PurchaseItemToWsObject purchaseItemConverter;
 	
+	private static String PREFIX = "9";
+	
 	public PurchaseToWsObject() {
 		this.purchaseItemConverter = new PurchaseItemToWsObject();
 	}
@@ -41,7 +43,7 @@ public class PurchaseToWsObject {
 		
 		apedido.setCODPROTHEUS(purchase.getResponsible().getCode());
 		apedido.setCHAVE(WsInfoEnum.WS_KEY.getValue());
-		apedido.setCODPVBOX(purchase.getId().toString());
+		apedido.setCODPVBOX(PREFIX + purchase.getId().toString());
 		apedido.setMOEDA(purchase.getLang() == Language.PT ? "1" : "2");
 		apedido.setRECISS(safeNull(reciss));
 		apedido.setCUSTO(safeNull(custo));
