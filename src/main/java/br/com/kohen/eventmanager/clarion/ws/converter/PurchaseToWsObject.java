@@ -43,7 +43,7 @@ public class PurchaseToWsObject {
 		
 		apedido.setCODPROTHEUS(purchase.getResponsible().getCode());
 		apedido.setCHAVE(WsInfoEnum.WS_KEY.getValue());
-		apedido.setCODPVBOX(PREFIX + purchase.getId().toString());
+		apedido.setCODPVBOX(custo.trim() + purchase.getId().toString());
 		apedido.setMOEDA(purchase.getLang() == Language.PT ? "1" : "2");
 		apedido.setRECISS(safeNull(reciss));
 		apedido.setCUSTO(safeNull(custo));
