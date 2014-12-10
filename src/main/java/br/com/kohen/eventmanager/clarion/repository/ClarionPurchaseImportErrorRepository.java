@@ -1,9 +1,10 @@
 package br.com.kohen.eventmanager.clarion.repository;
 
-import br.com.kohen.eventmanager.clarion.ws.entity.ImportPurchaseError;
-import br.com.kohen.eventmanager.commons.repository.BaseRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface ClarionPurchaseImportErrorRepository extends BaseRepository<ImportPurchaseError, Long> {
+import br.com.kohen.eventmanager.clarion.ws.entity.ImportPurchaseError;
+
+public interface ClarionPurchaseImportErrorRepository extends CrudRepository<ImportPurchaseError, Long> {
 
 	
 	
