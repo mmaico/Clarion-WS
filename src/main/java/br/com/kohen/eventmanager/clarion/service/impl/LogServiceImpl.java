@@ -1,13 +1,15 @@
 package br.com.kohen.eventmanager.clarion.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import br.com.kohen.eventmanager.clarion.repository.ClarionCompanyImportErrorRepository;
+import br.com.kohen.eventmanager.clarion.repository.ClarionCompanyRepository;
+import br.com.kohen.eventmanager.clarion.repository.ClarionPurchaseImportErrorRepository;
+import br.com.kohen.eventmanager.clarion.repository.ClarionPurchaseRepository;
 import br.com.kohen.eventmanager.clarion.service.LogService;
 import br.com.kohen.eventmanager.clarion.ws.entity.ImportError;
 import br.com.kohen.eventmanager.clarion.ws.entity.ImportPurchaseError;
-import br.com.kohen.eventmanager.commons.dao.CommonBaseDAO;
 import br.com.kohen.eventmanager.commons.entity.Company;
 import br.com.kohen.eventmanager.commons.entity.Purchase;
 
@@ -17,52 +19,59 @@ public class LogServiceImpl implements LogService {
 
 	
 	@Autowired
-	@Qualifier("commonBaseDAO")
-	private CommonBaseDAO baseDAO;
+	private ClarionPurchaseRepository purchaseRepository;
+	
+	@Autowired
+	private ClarionCompanyRepository companyRepository;
+	
+	@Autowired
+	private ClarionCompanyImportErrorRepository companyImportErrorReposiory;
+	
+	@Autowired
+	private ClarionPurchaseImportErrorRepository purchaseImportErrorReposiory;
 	
 	@Override
 	public void saveCompanyError(ImportError error) {
-		ImportError errorLoaded = (ImportError) baseDAO.findById(ImportError.class, error.getId());
+		ImportError errorLoaded = companyImportErrorReposiory.findOne(error.getId());
 		
 		if (errorLoaded != null) {
 			errorLoaded.setCause(error.getCause());
 			errorLoaded.setCauseEx(error.getCauseEx());
-			baseDAO.saveOrUpdate(errorLoaded);
+			companyImportErrorReposiory.save(errorLoaded);
 		} else {
-			baseDAO.saveOrUpdate(error);
+			companyImportErrorReposiory.save(error);
 		}
-		
 	}
 
 	@Override
 	public void savePurchaseError(ImportPurchaseError error) {
-		ImportPurchaseError errorLoaded = (ImportPurchaseError) baseDAO.findById(ImportPurchaseError.class, error.getId());
+		ImportPurchaseError errorLoaded = purchaseImportErrorReposiory.findOne(error.getId());
 		
 		if (errorLoaded != null) {
 			errorLoaded.setCause(error.getCause());
 			errorLoaded.setCauseEx(error.getCauseEx());
-			baseDAO.saveOrUpdate(errorLoaded);
+			purchaseImportErrorReposiory.save(errorLoaded);
 		} else {
-			baseDAO.saveOrUpdate(error);
+			purchaseImportErrorReposiory.save(error);
 		}
 	}
 
 	@Override
 	public void deleteError(Purchase purchase) {
-		ImportPurchaseError errorLoaded = (ImportPurchaseError) baseDAO.findById(ImportPurchaseError.class, purchase.getId());
+		ImportPurchaseError errorLoaded =  purchaseImportErrorReposiory.findOne(purchase.getId());
 		
 		if (errorLoaded != null) {
-			baseDAO.delete(errorLoaded);
+			purchaseImportErrorReposiory.delete(errorLoaded);
 		}
 		
 	}
 
 	@Override
 	public void deleteError(Company company) {
-		ImportError errorLoaded = (ImportError) baseDAO.findById(ImportError.class, company.getId());
+		ImportError errorLoaded = companyImportErrorReposiory.findOne(company.getId());
 		
 		if (errorLoaded != null) {
-			baseDAO.delete(errorLoaded);
+			companyImportErrorReposiory.delete(errorLoaded);
 		}
 		
 	}

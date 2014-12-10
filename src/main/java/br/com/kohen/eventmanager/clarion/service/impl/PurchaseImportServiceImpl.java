@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.kohen.eventmanager.clarion.dao.ClarionPurchaseDAO;
+import br.com.kohen.eventmanager.clarion.repository.ClarionPurchaseRepository;
 import br.com.kohen.eventmanager.clarion.service.LogService;
 import br.com.kohen.eventmanager.clarion.service.PurchaseImportService;
 import br.com.kohen.eventmanager.clarion.ws.service.PurchaseWsService;
@@ -37,7 +37,7 @@ public class PurchaseImportServiceImpl implements PurchaseImportService {
 	
 	@Autowired
 	@Qualifier("clarionPurchaseDAO")
-	private ClarionPurchaseDAO clarionPurchaseDAO;
+	private ClarionPurchaseRepository clarionPurchaseDAO;
 	
 	private PropertiesAcessor properties = new PropertiesAcessor();
 	

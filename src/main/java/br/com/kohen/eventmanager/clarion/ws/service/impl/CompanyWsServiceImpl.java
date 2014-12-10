@@ -5,9 +5,9 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import br.com.kohen.eventmanager.clarion.repository.ClarionCompanyRepository;
 import br.com.kohen.eventmanager.clarion.service.LogService;
 import br.com.kohen.eventmanager.clarion.ws.converter.CompanyToWsObject;
 import br.com.kohen.eventmanager.clarion.ws.dao.CompanyWsDAO;
@@ -16,8 +16,8 @@ import br.com.kohen.eventmanager.clarion.ws.service.CompanyWsService;
 import br.com.kohen.eventmanager.clarion.ws.utils.ClarionWsResponse;
 import br.com.kohen.eventmanager.clarion.ws.validator.CompanyValidator;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.company.GRAVADADOS;
-import br.com.kohen.eventmanager.commons.dao.CommonBaseDAO;
 import br.com.kohen.eventmanager.commons.entity.Company;
+import br.com.kohen.eventmanager.commons.repository.CommonCompanyRepository;
 
 @SuppressWarnings("rawtypes")
 @Service("companyWsService")
@@ -31,11 +31,9 @@ public class CompanyWsServiceImpl implements CompanyWsService {
 	private @Autowired LogService logService;
 	
 	@Autowired
-	@Qualifier("commonBaseDAO")
-	private CommonBaseDAO baseDAO;
+	private ClarionCompanyRepository companyRepository;
 	
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public void sendToWs(Company company) {
 		
@@ -64,7 +62,7 @@ public class CompanyWsServiceImpl implements CompanyWsService {
 		company.setCode(response.getValueReturned());
 		
 		logService.deleteError(company);
-		baseDAO.saveOrUpdate(company);
+		companyRepository.save(company);
 	}
 
 }

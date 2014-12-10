@@ -10,11 +10,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.kohen.eventmanager.clarion.dao.ClarionCompanyDAO;
+import br.com.kohen.eventmanager.clarion.repository.ClarionCompanyRepository;
 import br.com.kohen.eventmanager.clarion.service.CompanyImportService;
 import br.com.kohen.eventmanager.clarion.ws.service.CompanyWsService;
 import br.com.kohen.eventmanager.commons.config.PropertiesAcessor;
-import br.com.kohen.eventmanager.commons.dao.CommonBaseDAO;
 import br.com.kohen.eventmanager.commons.entity.Company;
 
 @Component
@@ -26,15 +25,11 @@ public class CompanyImportServiceImpl implements CompanyImportService {
 	
 	private static Boolean running = false;
 	
-	@Autowired
-	@Qualifier("commonBaseDAO")
-	private CommonBaseDAO baseDAO;
-	
 	private PropertiesAcessor properties = new PropertiesAcessor();
 	
 	@Autowired
 	@Qualifier("clarionCompanyDAO")
-	private ClarionCompanyDAO companyDAO;
+	private ClarionCompanyRepository companyDAO;
 	
 	@Autowired
 	private CompanyWsService companyWsService;

@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class PurchaseToWsObjectTest {
 		purchase.setLang(Language.PT);
 		purchase.setResponsible(companyStub());
 		purchase.setPaymentDue(this.dateDue);
+		purchase.setTotal(BigDecimal.TEN);
 		
 		KProperties kpropMock = mock(KProperties.class);
 		
@@ -75,9 +77,9 @@ public class PurchaseToWsObjectTest {
 		assertEquals("custo", converted.getCUSTO());
 		assertEquals("sp", converted.getRECISS());
 		assertEquals(WsInfoEnum.WS_KEY.getValue(), converted.getCHAVE());
-		assertEquals(purchase.getId().toString(), converted.getCODPVBOX());
+		assertEquals("custo2", converted.getCODPVBOX());
 		assertEquals("1", converted.getMOEDA());
-		assertEquals("1", dadoscr.getNVALPARC());
+		assertEquals("10", dadoscr.getNVALPARC());
 		assertEquals("11-10-2013", dadoscr.getDVENCPARC());
 	}
 	
@@ -91,6 +93,7 @@ public class PurchaseToWsObjectTest {
 		purchase.setPurchseItems(asList(purchaseItemMock));
 		purchase.setLang(Language.PT);
 		purchase.setPaymentDue(this.dateDue);
+		purchase.setTotal(BigDecimal.TEN);
 		
 		KProperties kpropMock = mock(KProperties.class);
 		

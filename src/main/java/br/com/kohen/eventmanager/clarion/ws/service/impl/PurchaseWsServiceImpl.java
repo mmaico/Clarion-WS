@@ -3,9 +3,9 @@ package br.com.kohen.eventmanager.clarion.ws.service.impl;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import br.com.kohen.eventmanager.clarion.repository.ClarionPurchaseRepository;
 import br.com.kohen.eventmanager.clarion.service.LogService;
 import br.com.kohen.eventmanager.clarion.ws.converter.PurchaseToWsObject;
 import br.com.kohen.eventmanager.clarion.ws.dao.PurchaseWsDAO;
@@ -14,7 +14,6 @@ import br.com.kohen.eventmanager.clarion.ws.service.PurchaseWsService;
 import br.com.kohen.eventmanager.clarion.ws.utils.ClarionWsResponse;
 import br.com.kohen.eventmanager.clarion.ws.validator.PurchaseValidator;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.purchase.APEDIDO;
-import br.com.kohen.eventmanager.commons.dao.CommonBaseDAO;
 import br.com.kohen.eventmanager.commons.entity.Purchase;
 
 @SuppressWarnings("rawtypes")
@@ -27,8 +26,7 @@ public class PurchaseWsServiceImpl implements PurchaseWsService {
 	private @Autowired PurchaseWsDAO dao;
 	
 	@Autowired
-	@Qualifier("commonBaseDAO")
-	private CommonBaseDAO baseDAO;
+	private ClarionPurchaseRepository purchaseRepository;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -58,7 +56,7 @@ public class PurchaseWsServiceImpl implements PurchaseWsService {
 		purchase.setCode(response.getValueReturned());
 		
 		logService.deleteError(purchase);
-		baseDAO.saveOrUpdate(purchase);
+		purchaseRepository.save(purchase);
 	}
 
 }
