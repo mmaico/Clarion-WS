@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,6 @@ import br.com.kohen.eventmanager.commons.entity.Company;
 
 @Component
 @Transactional
-@SuppressWarnings({"rawtypes"})
 public class CompanyImportServiceImpl implements CompanyImportService {
 
 	private Log log = LogFactory.getLog(CompanyImportServiceImpl.class);
@@ -28,8 +26,7 @@ public class CompanyImportServiceImpl implements CompanyImportService {
 	private PropertiesAcessor properties = new PropertiesAcessor();
 	
 	@Autowired
-	@Qualifier("clarionCompanyDAO")
-	private ClarionCompanyRepository companyDAO;
+	private ClarionCompanyRepository companyRepository;
 	
 	@Autowired
 	private CompanyWsService companyWsService;
@@ -44,7 +41,7 @@ public class CompanyImportServiceImpl implements CompanyImportService {
 			
 			running = true;
 			
-			List<Company> list = companyDAO.getAllCompanyNotImported();
+			List<Company> list = companyRepository.getAllCompanyNotImported();
 			for (Company company : list) {
 				try {
 				 importCompany(company);
