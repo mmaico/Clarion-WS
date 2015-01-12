@@ -40,6 +40,7 @@ public class PurchaseToWsObject {
 		
 		String custo = properties.loadSystemProperty().get("import.clarion.centro.custo", String.class);
 		String reciss = properties.loadSystemProperty().get("import.clarion.client.sp", String.class);
+		String empresa = properties.loadSystemProperty().get("import.clarion.company", String.class);
 		
 		apedido.setCODPROTHEUS(purchase.getResponsible().getCode());
 		apedido.setCHAVE(WsInfoEnum.WS_KEY.getValue());
@@ -47,7 +48,7 @@ public class PurchaseToWsObject {
 		apedido.setMOEDA(purchase.getLang() == Language.PT ? "1" : "2");
 		apedido.setRECISS(safeNull(reciss));
 		apedido.setCUSTO(safeNull(custo));
-		apedido.setEMPRESA("01");
+		apedido.setEMPRESA(empresa);
 		
 		ARRAYOFDADOSCR plots = createPlots(purchase);
 		apedido.setPARCELAS(plots);
