@@ -88,8 +88,9 @@ public class PurchaseImportServiceImpl implements PurchaseImportService {
 				
 				String isActive = settings.get(FieldNamesEnum.ATIVE.get());
 				
-				if (new Boolean(isActive)) {
+				if (!new Boolean(isActive)) {
 					log.debug("########################## As importacoes estao desativadas "+ event.getName() +": " + isActive);
+					return;
 				}
 				
 				List<Purchase> list = clarionPurchaseDAO.getAllPurchaseNotImported(event);

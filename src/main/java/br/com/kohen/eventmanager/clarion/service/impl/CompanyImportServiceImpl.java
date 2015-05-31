@@ -61,8 +61,9 @@ public class CompanyImportServiceImpl implements CompanyImportService {
 				
 				String isActive = settings.get(FieldNamesEnum.ATIVE.get());
 				
-				if (new Boolean(isActive)) {
+				if (!new Boolean(isActive)) {
 					log.debug("########################## As importacoes estao desativadas [COMPANY] "+ event.getName() +": " + isActive);
+					return;
 				}
 				
 				List<Company> list = companyRepository.getAllCompanyNotImported(event);
