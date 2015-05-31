@@ -12,7 +12,7 @@ import br.com.kohen.eventmanager.commons.repository.BaseRepository;
 public interface ClarionCompanyRepository extends BaseRepository<Company, Long> {
 
 	
-	@Query("SELECT c FROM Company AS c WHERE c.code is null AND c.companyCategory.id != 17 AND :event in (c.events)")
+	@Query("SELECT c FROM Company AS c join c.events e WHERE c.code is null AND c.companyCategory.id != 17 AND e = :event ")
 	public List<Company> getAllCompanyNotImported(@Param("event") Event event);
 	
 	
