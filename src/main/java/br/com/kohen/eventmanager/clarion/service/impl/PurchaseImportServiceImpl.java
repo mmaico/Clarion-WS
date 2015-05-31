@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,15 +16,19 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.kohen.eventmanager.clarion.FieldNamesEnum;
 import br.com.kohen.eventmanager.clarion.repository.ClarionPurchaseRepository;
 import br.com.kohen.eventmanager.clarion.service.LogService;
 import br.com.kohen.eventmanager.clarion.service.PurchaseImportService;
 import br.com.kohen.eventmanager.clarion.ws.service.PurchaseWsService;
+import br.com.kohen.eventmanager.clarion.ws.utils.MapUtils;
 import br.com.kohen.eventmanager.clarion.ws.validator.PurchaseValidator;
 import br.com.kohen.eventmanager.commons.config.PropertiesAcessor;
 import br.com.kohen.eventmanager.commons.entity.Company;
+import br.com.kohen.eventmanager.commons.entity.Event;
 import br.com.kohen.eventmanager.commons.entity.Purchase;
 import br.com.kohen.eventmanager.commons.entity.PurchaseItem;
+import br.com.kohen.eventmanager.commons.repository.CommonEventRepository;
 import br.com.kohen.eventmanager.commons.service.CommonCompanyService;
 
 @Component
@@ -47,6 +52,10 @@ public class PurchaseImportServiceImpl implements PurchaseImportService {
 	@Qualifier("commonCompanyService")
 	private CommonCompanyService companyService;
 	
+	@Autowired
+	@Qualifier("commonEventRepository")
+	private CommonEventRepository eventRepository;
+	
 	private PropertiesAcessor properties = new PropertiesAcessor();
 	
 	
@@ -62,29 +71,53 @@ public class PurchaseImportServiceImpl implements PurchaseImportService {
 			
 			Boolean enabled = properties.loadSystemProperty().get("import.clarion.enabled", Boolean.class);
 			
-			if (enabled == null || !enabled)
+			if (enabled == null || !enabled) {
+				log.debug("########################## Importacao desativada");
 				return;
+			}	
 			
-			List<Purchase> list = clarionPurchaseDAO.getAllPurchaseNotImported();
-			log.debug("########################## Compras a ser importadas: " + list.size());
+			Iterable<Event> result = eventRepository.findAll();
 			
-			for (Purchase purchase : list) {
-				try {
-					if (isValidImport(purchase)) {
-						importPurchase(purchase);
-					}
-				} catch(Exception e){
-					log.error("########################## Erro no processo de envio da compra: " + purchase.getId() +" --" + e.getMessage());
-				}	
+			for (Event event : result) {
+				Map<String, String> settings = event.getSettings();
+				
+				if (MapUtils.isValid(settings)) {
+					log.debug("########################## As configuracoes são invalidas "+ event.getName() +": " + settings);
+				}
+				
+				String isActive = settings.get(FieldNamesEnum.ATIVE.get());
+				
+				if (new Boolean(isActive)) {
+					log.debug("########################## As importacoes estao desativadas "+ event.getName() +": " + isActive);
+				}
+				
+				List<Purchase> list = clarionPurchaseDAO.getAllPurchaseNotImported(event);
+				
+				log.debug("########################## Compras a ser importadas"+ event.getName() +": " + list.size());
+				
+				for (Purchase purchase : list) {
+					try {
+						if (isValidImport(purchase)) {
+							sortItems(purchase.getPurchseItems());
+							
+							this.purchaseWsService.sendToWs(purchase, settings);
+						}
+					} catch(Exception e){
+						log.error("########################## Erro no processo de envio da compra: " + purchase.getId() +" --" + e.getMessage());
+					}	
+				}
+			
 			}
 			
+			
+					
 		} finally {
 			running = false;
 		}
 		
 	}
 	
-	public Boolean isValidImport(Purchase purchase) {
+	private Boolean isValidImport(Purchase purchase) {
 		Company responsible = purchase.getResponsible();
 		
 		if (responsible.isManExhibitor()) {
@@ -102,22 +135,6 @@ public class PurchaseImportServiceImpl implements PurchaseImportService {
 			}
 			return Boolean.TRUE;
 		}
-	}
-	
-	public void importPurchase(Purchase purchase) {
-		
-		
-		Boolean enabled = properties.loadSystemProperty().get("import.clarion.enabled", Boolean.class);
-		
-		if (enabled == null || !enabled) {
-			log.debug("########################## Importacao desativada");
-			return;
-		}	
-		
-		sortItems(purchase.getPurchseItems());
-		
-		this.purchaseWsService.sendToWs(purchase);
-		
 	}
 	
 	public void sortItems(List<PurchaseItem> purchseItems) {

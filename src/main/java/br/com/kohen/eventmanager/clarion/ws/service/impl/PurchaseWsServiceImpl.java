@@ -1,5 +1,6 @@
 package br.com.kohen.eventmanager.clarion.ws.service.impl;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import br.com.kohen.eventmanager.clarion.ws.validator.PurchaseValidator;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.purchase.APEDIDO;
 import br.com.kohen.eventmanager.commons.entity.Purchase;
 
-@SuppressWarnings("rawtypes")
 @Service("purchaseWsService")
 public class PurchaseWsServiceImpl implements PurchaseWsService {
 
@@ -28,9 +28,8 @@ public class PurchaseWsServiceImpl implements PurchaseWsService {
 	@Autowired
 	private ClarionPurchaseRepository purchaseRepository;
 	
-	@SuppressWarnings("unchecked")
 	@Override
-	public void sendToWs(Purchase purchase) {
+	public void sendToWs(Purchase purchase, Map<String, String> settings) {
 		
 		Set<String> errors = validator.validator(purchase);
 		
@@ -41,7 +40,7 @@ public class PurchaseWsServiceImpl implements PurchaseWsService {
 			return;
 		}
 		
-		APEDIDO apedido = converter.convert(purchase);
+		APEDIDO apedido = converter.convert(purchase, settings);
 		
 		ClarionWsResponse response = dao.send(apedido);
 		

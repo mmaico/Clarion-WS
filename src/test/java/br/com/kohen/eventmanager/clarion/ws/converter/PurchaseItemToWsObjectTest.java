@@ -35,7 +35,7 @@ public class PurchaseItemToWsObjectTest {
 		given(kpropMock.get("import.clarion.codigo.tes", String.class)).willReturn("tes");
 	
 		
-		DADOSITENS dadositem = convert.convert(purchaseItemStub);
+		DADOSITENS dadositem = null;//convert.convert(purchaseItemStub);
 		
 		assertEquals("tes", dadositem.getTES());
 		assertEquals(purchaseItemStub.getQtd().toString(), dadositem.getQUANTIDADE());

@@ -6,16 +6,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import br.com.kohen.eventmanager.clarion.FieldNamesEnum;
 import br.com.kohen.eventmanager.clarion.WsInfoEnum;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.purchase.APEDIDO;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.purchase.ARRAYOFDADOSCR;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.purchase.ARRAYOFDADOSITENS;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.purchase.DADOSCR;
 import br.com.kohen.eventmanager.clarion.ws.wsdl.purchase.DADOSITENS;
-import br.com.kohen.eventmanager.commons.config.PropertiesAcessor;
 import br.com.kohen.eventmanager.commons.entity.Purchase;
 import br.com.kohen.eventmanager.commons.entity.PurchaseItem;
 import br.com.kohen.eventmanager.commons.enums.Language;
@@ -23,24 +24,20 @@ import br.com.kohen.eventmanager.commons.utils.DateUtil;
 
 @Component
 public class PurchaseToWsObject {
-
-	private PropertiesAcessor properties = new PropertiesAcessor();
 	
 	private PurchaseItemToWsObject purchaseItemConverter;
-	
-	private static String PREFIX = "9";
 	
 	public PurchaseToWsObject() {
 		this.purchaseItemConverter = new PurchaseItemToWsObject();
 	}
 	
-	public APEDIDO convert(Purchase purchase) {
+	public APEDIDO convert(Purchase purchase, Map<String, String> settings) {
 		
 		APEDIDO apedido = new APEDIDO();
 		
-		String custo = properties.loadSystemProperty().get("import.clarion.centro.custo", String.class);
-		String reciss = properties.loadSystemProperty().get("import.clarion.client.sp", String.class);
-		String empresa = properties.loadSystemProperty().get("import.clarion.company", String.class);
+		String custo = settings.get(FieldNamesEnum.CENTRO_CUSTO.get());
+		String reciss = settings.get(FieldNamesEnum.ESTADO.get());
+		String empresa = settings.get(FieldNamesEnum.EMPRESA.get());
 		
 		apedido.setCODPROTHEUS(purchase.getResponsible().getCode());
 		apedido.setCHAVE(WsInfoEnum.WS_KEY.getValue());
@@ -57,7 +54,7 @@ public class PurchaseToWsObject {
 		ARRAYOFDADOSITENS arrayDados = new ARRAYOFDADOSITENS();
 		
 		for (PurchaseItem purchaseItem : purchseItems) {
-			DADOSITENS itemConverted = purchaseItemConverter.convert(purchaseItem);
+			DADOSITENS itemConverted = purchaseItemConverter.convert(purchaseItem, settings);
 			arrayDados.getDADOSITENS().add(itemConverted);
 		}
 		
