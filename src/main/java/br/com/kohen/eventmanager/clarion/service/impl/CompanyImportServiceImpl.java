@@ -54,8 +54,9 @@ public class CompanyImportServiceImpl implements CompanyImportService {
 			for (Event event : events) {
 				Map<String, String> settings = event.getSettings();
 				
-				if (MapUtils.isValid(settings)) {
+				if (!MapUtils.isValid(settings)) {
 					log.debug("########################## As configuracoes são invalidas[COMPANY] "+ event.getName() +": " + settings);
+					return;
 				}
 				
 				String isActive = settings.get(FieldNamesEnum.ATIVE.get());

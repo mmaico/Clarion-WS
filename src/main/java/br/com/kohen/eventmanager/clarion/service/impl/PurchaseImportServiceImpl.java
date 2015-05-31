@@ -81,8 +81,9 @@ public class PurchaseImportServiceImpl implements PurchaseImportService {
 			for (Event event : result) {
 				Map<String, String> settings = event.getSettings();
 				
-				if (MapUtils.isValid(settings)) {
+				if (!MapUtils.isValid(settings)) {
 					log.debug("########################## As configuracoes são invalidas "+ event.getName() +": " + settings);
+					return;
 				}
 				
 				String isActive = settings.get(FieldNamesEnum.ATIVE.get());
