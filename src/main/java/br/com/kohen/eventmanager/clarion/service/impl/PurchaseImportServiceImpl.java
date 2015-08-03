@@ -68,14 +68,7 @@ public class PurchaseImportServiceImpl implements PurchaseImportService {
 				return;
 			
 			running = true;
-			
-			Boolean enabled = properties.loadSystemProperty().get("import.clarion.enabled", Boolean.class);
-			
-			if (enabled == null || !enabled) {
-				log.debug("########################## Importacao desativada");
-				return;
-			}	
-			
+		
 			Iterable<Event> result = eventRepository.findAll();
 			
 			for (Event event : result) {
@@ -110,9 +103,7 @@ public class PurchaseImportServiceImpl implements PurchaseImportService {
 				}
 			
 			}
-			
-			
-					
+											
 		} finally {
 			running = false;
 		}
