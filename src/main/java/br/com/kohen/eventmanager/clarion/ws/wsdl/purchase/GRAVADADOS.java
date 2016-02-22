@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="PEDIDO" type="{http://189.2.170.19:81/}APEDIDO"/>
+ *         &lt;element name="PEDIDO" type="{http://179.191.78.118:81/}APEDIDO"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

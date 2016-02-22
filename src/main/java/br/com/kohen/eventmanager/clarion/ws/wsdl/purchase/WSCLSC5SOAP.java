@@ -1,6 +1,8 @@
 
 package br.com.kohen.eventmanager.clarion.ws.wsdl.purchase;
 
+import br.com.kohen.eventmanager.clarion.ws.WSConfig;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -16,7 +18,7 @@ import javax.xml.ws.ResponseWrapper;
  * Generated source version: 2.1
  * 
  */
-@WebService(name = "WSCLSC5SOAP", targetNamespace = "http://189.2.170.19:81/")
+@WebService(name = "WSCLSC5SOAP", targetNamespace = WSConfig.WS_END_POINT)
 @XmlSeeAlso({
     ObjectFactory.class
 })
@@ -29,12 +31,12 @@ public interface WSCLSC5SOAP {
      * @return
      *     returns java.lang.String
      */
-    @WebMethod(operationName = "GRAVADADOS", action = "http://189.2.170.19:81/GRAVADADOS")
-    @WebResult(name = "GRAVADADOSRESULT", targetNamespace = "http://189.2.170.19:81/")
-    @RequestWrapper(localName = "GRAVADADOS", targetNamespace = "http://189.2.170.19:81/", className = "purchase.GRAVADADOS")
-    @ResponseWrapper(localName = "GRAVADADOSRESPONSE", targetNamespace = "http://189.2.170.19:81/", className = "purchase.GRAVADADOSRESPONSE")
+    @WebMethod(operationName = "GRAVADADOS", action = WSConfig.WS_END_POINT + "GRAVADADOS")
+    @WebResult(name = "GRAVADADOSRESULT", targetNamespace = WSConfig.WS_END_POINT)
+    @RequestWrapper(localName = "GRAVADADOS", targetNamespace = WSConfig.WS_END_POINT, className = "purchase.GRAVADADOS")
+    @ResponseWrapper(localName = "GRAVADADOSRESPONSE", targetNamespace = WSConfig.WS_END_POINT, className = "purchase.GRAVADADOSRESPONSE")
     public String gravadados(
-        @WebParam(name = "PEDIDO", targetNamespace = "http://189.2.170.19:81/")
+        @WebParam(name = "PEDIDO", targetNamespace = WSConfig.WS_END_POINT)
         APEDIDO pedido);
 
 }

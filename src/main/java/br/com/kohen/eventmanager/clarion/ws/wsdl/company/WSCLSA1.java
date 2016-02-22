@@ -1,6 +1,8 @@
 
 package br.com.kohen.eventmanager.clarion.ws.wsdl.company;
 
+import br.com.kohen.eventmanager.clarion.ws.WSConfig;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
@@ -18,7 +20,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.1
  * 
  */
-@WebServiceClient(name = "WSCLSA1", targetNamespace = "http://189.2.170.19:81/", wsdlLocation = "http://189.2.170.19:81/ws/wsclsa1.apw?wsdl")
+@WebServiceClient(name = "WSCLSA1", targetNamespace = WSConfig.WS_END_POINT, wsdlLocation = WSConfig.WS_END_POINT + "ws/wsclsa1.apw?wsdl")
 public class WSCLSA1
     extends Service
 {
@@ -31,9 +33,9 @@ public class WSCLSA1
         try {
             URL baseUrl;
             baseUrl = br.com.kohen.eventmanager.clarion.ws.wsdl.company.WSCLSA1 .class.getResource(".");
-            url = new URL(baseUrl, "http://189.2.170.19:81/ws/wsclsa1.apw?wsdl");
+            url = new URL(baseUrl, WSConfig.WS_END_POINT +  "ws/wsclsa1.apw?wsdl");
         } catch (MalformedURLException e) {
-            logger.warning("Failed to create URL for the wsdl Location: 'http://189.2.170.19:81/ws/wsclsa1.apw?wsdl', retrying as a local file");
+            logger.warning("Failed to create URL for the wsdl Location: 'http://179.191.78.118:81/ws/wsclsa1.apw?wsdl', retrying as a local file");
             logger.warning(e.getMessage());
         }
         WSCLSA1_WSDL_LOCATION = url;
@@ -44,7 +46,7 @@ public class WSCLSA1
     }
 
     public WSCLSA1() {
-        super(WSCLSA1_WSDL_LOCATION, new QName("http://189.2.170.19:81/", "WSCLSA1"));
+        super(WSCLSA1_WSDL_LOCATION, new QName(WSConfig.WS_END_POINT, "WSCLSA1"));
     }
 
     /**
@@ -54,7 +56,7 @@ public class WSCLSA1
      */
     @WebEndpoint(name = "WSCLSA1SOAP")
     public WSCLSA1SOAP getWSCLSA1SOAP() {
-        return super.getPort(new QName("http://189.2.170.19:81/", "WSCLSA1SOAP"), WSCLSA1SOAP.class);
+        return super.getPort(new QName(WSConfig.WS_END_POINT, "WSCLSA1SOAP"), WSCLSA1SOAP.class);
     }
 
     /**
@@ -66,7 +68,7 @@ public class WSCLSA1
      */
     @WebEndpoint(name = "WSCLSA1SOAP")
     public WSCLSA1SOAP getWSCLSA1SOAP(WebServiceFeature... features) {
-        return super.getPort(new QName("http://189.2.170.19:81/", "WSCLSA1SOAP"), WSCLSA1SOAP.class, features);
+        return super.getPort(new QName(WSConfig.WS_END_POINT, "WSCLSA1SOAP"), WSCLSA1SOAP.class, features);
     }
 
 }

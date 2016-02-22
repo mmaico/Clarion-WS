@@ -1,6 +1,8 @@
 
 package br.com.kohen.eventmanager.clarion.ws.wsdl.balance;
 
+import br.com.kohen.eventmanager.clarion.ws.WSConfig;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -16,7 +18,7 @@ import javax.xml.ws.ResponseWrapper;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "WSCLSE5SOAP", targetNamespace = "http://189.2.170.19:81/")
+@WebService(name = "WSCLSE5SOAP", targetNamespace = WSConfig.WS_END_POINT)
 @XmlSeeAlso({
     ObjectFactory.class
 })
@@ -32,18 +34,18 @@ public interface WSCLSE5SOAP {
      * @return
      *     returns java.lang.String
      */
-    @WebMethod(operationName = "SALDOTITULO", action = "http://189.2.170.19:81/SALDOTITULO")
-    @WebResult(name = "SALDOTITULORESULT", targetNamespace = "http://189.2.170.19:81/")
-    @RequestWrapper(localName = "SALDOTITULO", targetNamespace = "http://189.2.170.19:81/", className = "stubs.SALDOTITULO")
-    @ResponseWrapper(localName = "SALDOTITULORESPONSE", targetNamespace = "http://189.2.170.19:81/", className = "stubs.SALDOTITULORESPONSE")
+    @WebMethod(operationName = "SALDOTITULO", action = WSConfig.WS_END_POINT + "SALDOTITULO")
+    @WebResult(name = "SALDOTITULORESULT", targetNamespace = WSConfig.WS_END_POINT)
+    @RequestWrapper(localName = "SALDOTITULO", targetNamespace = WSConfig.WS_END_POINT, className = "stubs.SALDOTITULO")
+    @ResponseWrapper(localName = "SALDOTITULORESPONSE", targetNamespace = WSConfig.WS_END_POINT, className = "stubs.SALDOTITULORESPONSE")
     public String saldotitulo(
-        @WebParam(name = "CHAVE", targetNamespace = "http://189.2.170.19:81/")
+        @WebParam(name = "CHAVE", targetNamespace = WSConfig.WS_END_POINT)
         String chave,
-        @WebParam(name = "EMPRESA", targetNamespace = "http://189.2.170.19:81/")
+        @WebParam(name = "EMPRESA", targetNamespace = WSConfig.WS_END_POINT)
         String empresa,
-        @WebParam(name = "PEDIDO", targetNamespace = "http://189.2.170.19:81/")
+        @WebParam(name = "PEDIDO", targetNamespace = WSConfig.WS_END_POINT)
         String pedido,
-        @WebParam(name = "PARCELA", targetNamespace = "http://189.2.170.19:81/")
+        @WebParam(name = "PARCELA", targetNamespace = WSConfig.WS_END_POINT)
         String parcela);
 
 }

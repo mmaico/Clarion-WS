@@ -1,6 +1,8 @@
 
 package br.com.kohen.eventmanager.clarion.ws.wsdl.purchase;
 
+import br.com.kohen.eventmanager.clarion.ws.WSConfig;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
@@ -20,7 +22,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.1
  * 
  */
-@WebServiceClient(name = "WSCLSC5", targetNamespace = "http://189.2.170.19:81/", wsdlLocation = "http://189.2.170.19:81/ws/WSCLSC5.apw?WSDL")
+@WebServiceClient(name = "WSCLSC5", targetNamespace = WSConfig.WS_END_POINT, wsdlLocation = WSConfig.WS_END_POINT + "ws/WSCLSC5.apw?WSDL")
 public class WSCLSC5 extends Service {
 
     private final static URL WSCLSC5_WSDL_LOCATION;
@@ -31,7 +33,7 @@ public class WSCLSC5 extends Service {
         try {
             URL baseUrl;
             baseUrl = WSCLSC5.class.getResource(".");
-            url = new URL(baseUrl, "http://189.2.170.19:81/ws/WSCLSC5.apw?WSDL");
+            url = new URL(baseUrl, WSConfig.WS_END_POINT + "ws/WSCLSC5.apw?WSDL");
         } catch (MalformedURLException e) {
             logger.warning("Failed to create URL for the wsdl Location: 'http://189.2.170.19:81/ws/WSCLSC5.apw?WSDL', retrying as a local file");
             logger.warning(e.getMessage());
@@ -44,7 +46,7 @@ public class WSCLSC5 extends Service {
     }
 
     public WSCLSC5() {
-        super(WSCLSC5_WSDL_LOCATION, new QName("http://189.2.170.19:81/", "WSCLSC5"));
+        super(WSCLSC5_WSDL_LOCATION, new QName(WSConfig.WS_END_POINT, "WSCLSC5"));
     }
 
     /**
@@ -54,7 +56,7 @@ public class WSCLSC5 extends Service {
      */
     @WebEndpoint(name = "WSCLSC5SOAP")
     public WSCLSC5SOAP getWSCLSC5SOAP() {
-        return super.getPort(new QName("http://189.2.170.19:81/", "WSCLSC5SOAP"), WSCLSC5SOAP.class);
+        return super.getPort(new QName(WSConfig.WS_END_POINT, "WSCLSC5SOAP"), WSCLSC5SOAP.class);
     }
 
     /**
@@ -66,7 +68,7 @@ public class WSCLSC5 extends Service {
      */
     @WebEndpoint(name = "WSCLSC5SOAP")
     public WSCLSC5SOAP getWSCLSC5SOAP(WebServiceFeature... features) {
-        return super.getPort(new QName("http://189.2.170.19:81/", "WSCLSC5SOAP"), WSCLSC5SOAP.class, features);
+        return super.getPort(new QName(WSConfig.WS_END_POINT, "WSCLSC5SOAP"), WSCLSC5SOAP.class, features);
     }
 
 }

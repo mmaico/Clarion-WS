@@ -22,9 +22,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="CODPVBOX" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="CUSTO" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="EMPRESA" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="ITENS" type="{http://189.2.170.19:81/}ARRAYOFDADOSITENS"/>
+ *         &lt;element name="ITENS" type="{http://179.191.78.118:81/}ARRAYOFDADOSITENS"/>
  *         &lt;element name="MOEDA" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="PARCELAS" type="{http://189.2.170.19:81/}ARRAYOFDADOSCR"/>
+ *         &lt;element name="PARCELAS" type="{http://179.191.78.118:81/}ARRAYOFDADOSCR"/>
  *         &lt;element name="RECISS" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
